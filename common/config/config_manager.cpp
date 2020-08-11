@@ -5,6 +5,7 @@
 #include "config_manager.h"
 #include <libgen.h>
 #include <zconf.h>
+#include <QFile>
 
 ConfigManager *ConfigManager::instance = new ConfigManager();
 static const char *configPath = "~/.config/kkshell/ini/settings.ini";
@@ -46,15 +47,13 @@ ConfigManager::ConfigManager() {
 bool ConfigManager::loadDataFromDB() {
     SI_Error ret = mIni.LoadFile(absConfigPath_.c_str());
     if (SI_OK != ret) {
-        printf("loadDataFromDB error, reload default config\n");
-        fflush(stdout);
+        fprintf(stderr,"loadDataFromDB error, reload default config\n");
         return false;
     }
 
     std::string version = getString("app", "version", "0");
     if ("0" == version) {
-        printf("loadDataFromDB error, reload default config\n");
-        fflush(stdout);
+        fprintf(stderr,"loadDataFromDB error, reload default config\n");
         return false;
     }
 
@@ -62,16 +61,11 @@ bool ConfigManager::loadDataFromDB() {
 }
 
 void ConfigManager::loadDefaultConfig() {
-    setCString("app", "version", "1.0.00");
-    setCString("app", "fontFamily", "Monospace");
-    setInt("app", "fontSize", 18);
-    setCString("app", "colorScheme", "Tango");
-
-    setCString("button_bar", "01-disable-log", "echo set log_level 6 > /proc/konka/LogImpl\\r");
-    setCString("button_bar", "02-remount", "mount -o rw,remount /vendor\\r");
+    QFile defaultSettings(":/ini/settings.ini");
+    defaultSettings.open(QIODevice::ReadOnly);
+    mIni.LoadData(defaultSettings.readAll().data());
     if (!save()) {
-        printf("save config error\n");
-        fflush(stdout);
+        fprintf(stderr, "save config error\n");
     }
 }
 
@@ -141,12 +135,11 @@ std::vector<int32_t> string2IntArray(const char *str) {
             int32_t value;
             if (!strncasecmp(tmp, "0x", 2)) {
                 if (EOF == sscanf(tmp, "%x", &value)) {
-                    printf("string2IntArray error: %s\n", str);
-                    fflush(stdout);
+                    fprintf(stderr,"string2IntArray error: %s\n", str);
                 }
             } else {
                 if (EOF == sscanf(tmp, "%d", &value)) {
-                    printf("string2IntArray error: %s\n", str);
+                    fprintf(stderr, "string2IntArray error: %s\n", str);
                 }
             }
             array.push_back(value);
@@ -187,7 +180,7 @@ std::vector<double> string2DoubleArray(const char *str) {
             strncpy(tmp, str, p - str);
             double value;
             if (EOF == sscanf(tmp, "%lf", &value)) {
-                printf("string2DoubleArray error: %s\n", str);
+                fprintf(stderr,"string2DoubleArray error: %s\n", str);
             }
             array.push_back(value);
         }

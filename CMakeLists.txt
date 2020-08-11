@@ -12,7 +12,7 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-find_package(Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
+find_package(Qt5 COMPONENTS Core Widgets LinguistTools REQUIRED)
 
 add_subdirectory(thirdparty)
 add_subdirectory(common)
@@ -33,6 +33,6 @@ add_executable(kkshell
 set(THIRD_PARTY_LIBS simpleini)
 set(PROJECT_LIBS config terminals)
 
-target_link_libraries(kkshell PRIVATE Qt5::Widgets ${THIRD_PARTY_LIBS} ${PROJECT_LIBS})
+target_link_libraries(kkshell PRIVATE Qt5::Core Qt5::Widgets ${THIRD_PARTY_LIBS} ${PROJECT_LIBS})
 
 qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
