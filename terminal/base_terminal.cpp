@@ -19,6 +19,9 @@ BaseTerminal::BaseTerminal(QWidget *parent) : QTermWidget(0, parent) {
     font.setFamily(fontFamily);
     font.setPointSize(fontSize);
     setTerminalFont(font);
+    QStringList env;
+    env.append("TERM=xterm-256color");
+    setEnvironment(env);
 
     //set color scheme
     QString scheme = conf->getCString("app", "colorScheme", "Tango");
