@@ -1,0 +1,1 @@
+add_library(simpleini ConvertUTF.c ConvertUTF.h SimpleIni.h)

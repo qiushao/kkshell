@@ -1,0 +1,1 @@
+add_library(config config_manager.cpp config_manager.h)

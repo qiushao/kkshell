@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SessionManager</class>
+ <widget class="QMainWindow" name="SessionManager">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>570</width>
+    <height>529</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Session Manager</string>
+  </property>
+  <widget class="QWidget" name="centralwidget"/>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionSessionAdd"/>
+   <addaction name="actionSessinDelete"/>
+   <addaction name="actionSessionModify"/>
+   <addaction name="actionSessionfind"/>
+  </widget>
+  <action name="actionSessionAdd">
+   <property name="icon">
+    <iconset resource="../resources.qrc">
+     <normaloff>:/images/new-session.png</normaloff>:/images/new-session.png</iconset>
+   </property>
+   <property name="text">
+    <string>add</string>
+   </property>
+   <property name="toolTip">
+    <string>add session</string>
+   </property>
+  </action>
+  <action name="actionSessinDelete">
+   <property name="icon">
+    <iconset resource="../resources.qrc">
+     <normaloff>:/images/application-exit.png</normaloff>:/images/application-exit.png</iconset>
+   </property>
+   <property name="text">
+    <string>del</string>
+   </property>
+   <property name="toolTip">
+    <string>del session</string>
+   </property>
+  </action>
+  <action name="actionSessionModify">
+   <property name="icon">
+    <iconset resource="../resources.qrc">
+     <normaloff>:/images/settings.png</normaloff>:/images/settings.png</iconset>
+   </property>
+   <property name="text">
+    <string>modify</string>
+   </property>
+   <property name="toolTip">
+    <string>modify session attr</string>
+   </property>
+  </action>
+  <action name="actionSessionfind">
+   <property name="icon">
+    <iconset resource="../resources.qrc">
+     <normaloff>:/images/find.png</normaloff>:/images/find.png</iconset>
+   </property>
+   <property name="text">
+    <string>find</string>
+   </property>
+   <property name="toolTip">
+    <string>find session</string>
+   </property>
+  </action>
+ </widget>
+ <resources>
+  <include location="../resources.qrc"/>
+ </resources>
+ <connections/>
+</ui>
