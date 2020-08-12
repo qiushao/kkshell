@@ -4,6 +4,8 @@
 
 #include "session_manager.h"
 #include <QDebug>
+#include <QHeaderView>
+#include "widget/edit_session_dialog.h"
 #include "common/config/config_manager.h"
 #include "resources/forms/ui_session_manager.h"
 
@@ -12,14 +14,21 @@ SessionManager::SessionManager(QWidget *parent) : QMainWindow(parent), ui(new Ui
     sessionListView = new QTableWidget(this);
     setCentralWidget(sessionListView);
 
+
+    QStringList listHeader;
+    listHeader << "title" << "host/dev" << "port/baudRate";
     sessionListView->setColumnCount(3);
-    QStringList logListHeader;
-    logListHeader << "title" << "host/dev" << "port/baudRate";
-    sessionListView->setHorizontalHeaderLabels(logListHeader);
+    sessionListView->setHorizontalHeaderLabels(listHeader);
     sessionListView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     sessionListView->setSelectionBehavior(QAbstractItemView::SelectRows);
 
+    //所有列都扩展自适应宽度，填充充满整个控件
+    QHeaderView *headerView = sessionListView->horizontalHeader();
+    headerView->setSectionResizeMode(QHeaderView::Stretch);
+
     QObject::connect(sessionListView, &QTableWidget::itemDoubleClicked, this, &SessionManager::onItemDoubleClicked);
+    QObject::connect(ui->actionSessionEdit, &QAction::triggered, this, &SessionManager::onActionEditSession);
+    QObject::connect(ui->actionSessionDelete, &QAction::triggered, this, &SessionManager::onActionDeleteSession);
 
     fillSessionList();
 }
@@ -49,16 +58,10 @@ void SessionManager::fillSessionList() {
     }
 }
 
-void SessionManager::updateSettings() {
-
-}
-
 void SessionManager::onItemDoubleClicked(QTableWidgetItem *item) {
     hide();
-    int row = sessionListView->currentRow();
-    QTableWidgetItem *titleItem = sessionListView->item(row, 0);
-    QString title = titleItem->text();
-    emit openSession(title.toStdString());
+    std::string sessionName = getSelectSessionName();
+    emit openSession(sessionName);
 }
 
 void SessionManager::addLocalShellSessionToList(std::string session, int row) {
@@ -86,3 +89,23 @@ void SessionManager::addSSHSessionToList(std::string session, int row) {
     sessionListView->setItem(row, 1, new QTableWidgetItem(host.c_str()));
     sessionListView->setItem(row, 2, new QTableWidgetItem(port.c_str()));
 }
+
+
+std::string SessionManager::getSelectSessionName() {
+    int row = sessionListView->currentRow();
+    QTableWidgetItem *titleItem = sessionListView->item(row, 0);
+    QString title = titleItem->text();
+    return title.toStdString();
+}
+
+void SessionManager::onActionEditSession() {
+    std::string sessionName = getSelectSessionName();
+    std::string sessionType = ConfigManager::getInstance()->getString("sessions", sessionName.c_str(), "unknown");
+    EditSessionDialog *dialog = new EditSessionDialog(sessionName, sessionType, this);
+    dialog->show();
+}
+
+void SessionManager::onActionDeleteSession() {
+
+}
+

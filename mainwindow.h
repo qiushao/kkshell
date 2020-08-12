@@ -23,7 +23,10 @@ public:
 
     void onActionExit();
     void onActionSetting();
-    void onActionNewSession();
+    void onActionNewSerialSession();
+    void onActionNewSSHSession();
+    void onActionNewLocalShellSession();
+    void onActionOpenSession();
     void onActionConnect();
     void onActionDisconnect();
     void onActionCopy();

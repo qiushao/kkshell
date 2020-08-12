@@ -27,9 +27,18 @@
     <property name="title">
      <string>file</string>
     </property>
+    <widget class="QMenu" name="menunew">
+     <property name="title">
+      <string>new</string>
+     </property>
+     <addaction name="actionNewSerialSession"/>
+     <addaction name="actionNewSSHSession"/>
+     <addaction name="actionNewLocalShellSession"/>
+    </widget>
     <addaction name="actionConnect"/>
     <addaction name="actionDisconnect"/>
-    <addaction name="actionNewSession"/>
+    <addaction name="actionOpenSession"/>
+    <addaction name="menunew"/>
     <addaction name="actionSettings"/>
     <addaction name="actionExit"/>
    </widget>
@@ -75,9 +84,11 @@
     <bool>false</bool>
    </attribute>
    <addaction name="actionSettings"/>
-   <addaction name="actionNewSession"/>
+   <addaction name="actionOpenSession"/>
+   <addaction name="separator"/>
    <addaction name="actionConnect"/>
    <addaction name="actionDisconnect"/>
+   <addaction name="separator"/>
    <addaction name="actionFind"/>
    <addaction name="actionClear"/>
   </widget>
@@ -110,19 +121,10 @@
     <string>disconnect</string>
    </property>
   </action>
-  <action name="actionNewSession">
-   <property name="icon">
-    <iconset resource="../resources.qrc">
-     <normaloff>:/images/new-session.png</normaloff>:/images/new-session.png</iconset>
-   </property>
-   <property name="text">
-    <string>new session</string>
-   </property>
-  </action>
   <action name="actionSettings">
    <property name="icon">
     <iconset resource="../resources.qrc">
-     <normaloff>:/images/settings.png</normaloff>:/images/settings.png</iconset>
+     <normaloff>:/images/setting.png</normaloff>:/images/setting.png</iconset>
    </property>
    <property name="text">
     <string>settings</string>
@@ -179,10 +181,46 @@
   <action name="actionExit">
    <property name="icon">
     <iconset resource="../resources.qrc">
-     <normaloff>:/images/application-exit.png</normaloff>:/images/application-exit.png</iconset>
+     <normaloff>:/images/exit.png</normaloff>:/images/exit.png</iconset>
    </property>
    <property name="text">
     <string>exit</string>
+   </property>
+  </action>
+  <action name="actionOpenSession">
+   <property name="icon">
+    <iconset resource="../resources.qrc">
+     <normaloff>:/images/open.png</normaloff>:/images/open.png</iconset>
+   </property>
+   <property name="text">
+    <string>open session</string>
+   </property>
+  </action>
+  <action name="actionNewSerialSession">
+   <property name="icon">
+    <iconset resource="../resources.qrc">
+     <normaloff>:/images/new.png</normaloff>:/images/new.png</iconset>
+   </property>
+   <property name="text">
+    <string>new serial session</string>
+   </property>
+  </action>
+  <action name="actionNewSSHSession">
+   <property name="icon">
+    <iconset resource="../resources.qrc">
+     <normaloff>:/images/new.png</normaloff>:/images/new.png</iconset>
+   </property>
+   <property name="text">
+    <string>new ssh session</string>
+   </property>
+  </action>
+  <action name="actionNewLocalShellSession">
+   <property name="icon">
+    <iconset resource="../resources.qrc">
+     <normaloff>:/images/new.png</normaloff>:/images/new.png</iconset>
+   </property>
+   <property name="text">
+    <string>new local shell session</string>
    </property>
   </action>
  </widget>

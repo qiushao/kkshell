@@ -24,27 +24,13 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="actionSessionAdd"/>
-   <addaction name="actionSessinDelete"/>
-   <addaction name="actionSessionModify"/>
-   <addaction name="actionSessionfind"/>
+   <addaction name="actionSessionEdit"/>
+   <addaction name="actionSessionDelete"/>
   </widget>
-  <action name="actionSessionAdd">
+  <action name="actionSessionDelete">
    <property name="icon">
     <iconset resource="../resources.qrc">
-     <normaloff>:/images/new-session.png</normaloff>:/images/new-session.png</iconset>
-   </property>
-   <property name="text">
-    <string>add</string>
-   </property>
-   <property name="toolTip">
-    <string>add session</string>
-   </property>
-  </action>
-  <action name="actionSessinDelete">
-   <property name="icon">
-    <iconset resource="../resources.qrc">
-     <normaloff>:/images/application-exit.png</normaloff>:/images/application-exit.png</iconset>
+     <normaloff>:/images/delete.png</normaloff>:/images/delete.png</iconset>
    </property>
    <property name="text">
     <string>del</string>
@@ -53,28 +39,16 @@
     <string>del session</string>
    </property>
   </action>
-  <action name="actionSessionModify">
+  <action name="actionSessionEdit">
    <property name="icon">
     <iconset resource="../resources.qrc">
-     <normaloff>:/images/settings.png</normaloff>:/images/settings.png</iconset>
+     <normaloff>:/images/edit.png</normaloff>:/images/edit.png</iconset>
    </property>
    <property name="text">
-    <string>modify</string>
+    <string>edit</string>
    </property>
    <property name="toolTip">
-    <string>modify session attr</string>
-   </property>
-  </action>
-  <action name="actionSessionfind">
-   <property name="icon">
-    <iconset resource="../resources.qrc">
-     <normaloff>:/images/find.png</normaloff>:/images/find.png</iconset>
-   </property>
-   <property name="text">
-    <string>find</string>
-   </property>
-   <property name="toolTip">
-    <string>find session</string>
+    <string>edit session attr</string>
    </property>
   </action>
  </widget>

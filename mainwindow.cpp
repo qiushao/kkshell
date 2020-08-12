@@ -7,6 +7,7 @@
 #include "terminal/serial_terminal.h"
 #include "terminal/ssh_terminal.h"
 #include "widget/command_button.h"
+#include "widget/new_session_dialog.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -99,13 +100,16 @@ void MainWindow::onActionSetting() {
     settingDialog->show();
 }
 
-void MainWindow::onActionNewSession() {
+void MainWindow::onActionOpenSession() {
     sessionManager->show();
 }
 
 void MainWindow::actionInit() {
     QObject::connect(ui->actionSettings, &QAction::triggered, this, &MainWindow::onActionSetting);
-    QObject::connect(ui->actionNewSession, &QAction::triggered, this, &MainWindow::onActionNewSession);
+    QObject::connect(ui->actionOpenSession, &QAction::triggered, this, &MainWindow::onActionOpenSession);
+    QObject::connect(ui->actionNewLocalShellSession, &QAction::triggered, this, &MainWindow::onActionNewLocalShellSession);
+    QObject::connect(ui->actionNewSSHSession, &QAction::triggered, this, &MainWindow::onActionNewSSHSession);
+    QObject::connect(ui->actionNewSerialSession, &QAction::triggered, this, &MainWindow::onActionNewSerialSession);
     QObject::connect(ui->actionExit, &QAction::triggered, this, &MainWindow::onActionExit);
 
     QObject::connect(ui->actionConnect, &QAction::triggered, this, &MainWindow::onActionConnect);
@@ -184,3 +188,20 @@ BaseTerminal* MainWindow::createSSHSession(std::string session) {
     SSHTerminal *terminal = new SSHTerminal(sshSettings, this);
     return terminal;
 }
+
+void MainWindow::onActionNewSerialSession() {
+    NewSessionDialog *dialog = new NewSessionDialog("serial", this);
+    dialog->show();
+}
+
+void MainWindow::onActionNewSSHSession() {
+    NewSessionDialog *dialog = new NewSessionDialog("ssh", this);
+    dialog->show();
+}
+
+void MainWindow::onActionNewLocalShellSession() {
+    NewSessionDialog *dialog = new NewSessionDialog("local", this);
+    dialog->show();
+}
+
+

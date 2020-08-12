@@ -46,6 +46,9 @@ public:
 
     std::string getString(const char *section, const char *key, const char *defaultValue = "");
 
+    void deleteSection(const char *section);
+    void deleteKey(const char *section, const char *key);
+
 private:
     bool loadDataFromDB();
     void loadDefaultConfig();

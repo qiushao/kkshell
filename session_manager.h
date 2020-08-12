@@ -19,17 +19,20 @@ public:
     explicit SessionManager(QWidget *parent = nullptr);
     ~SessionManager() override;
 
-    void updateSettings();
     void onItemDoubleClicked(QTableWidgetItem *item);
 
 signals:
     void openSession(std::string session);
 
 private:
+    void onActionEditSession();
+    void onActionDeleteSession();
+
     void fillSessionList();
     void addLocalShellSessionToList(std::string session, int row);
     void addSerialSessionToList(std::string session, int row);
     void addSSHSessionToList(std::string session, int row);
+    std::string getSelectSessionName();
 
     Ui::SessionManager *ui = nullptr;
     QTableWidget *sessionListView;

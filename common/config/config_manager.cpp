@@ -261,3 +261,16 @@ std::vector<std::string> ConfigManager::getSectionKeys(const char *section) {
     }
     return keysList;
 }
+
+void ConfigManager::deleteSection(const char *section) {
+    std::vector<std::string> keys = getSectionKeys(section);
+    for (std::string key : keys) {
+        mIni.Delete(section, key.c_str(), true);
+    }
+    save();
+}
+
+void ConfigManager::deleteKey(const char *section, const char *key) {
+    mIni.Delete(section, key);
+    save();
+}
