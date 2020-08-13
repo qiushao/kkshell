@@ -169,6 +169,7 @@ BaseTerminal* MainWindow::createSerialSession(std::string session) {
     ConfigManager *conf = ConfigManager::getInstance();
     SerialSettings settings;
     settings.name = conf->getString(session.c_str(), "dev").c_str();
+    settings.name = "/dev/" + settings.name;
     settings.baudRate = conf->getInt(session.c_str(), "baudRate");
     settings.dataBits = static_cast<QSerialPort::DataBits>(conf->getInt(session.c_str(), "dataBits"));
     settings.parity = static_cast<QSerialPort::Parity>(conf->getInt(session.c_str(), "parity"));
@@ -190,18 +191,27 @@ BaseTerminal* MainWindow::createSSHSession(std::string session) {
 }
 
 void MainWindow::onActionNewSerialSession() {
-    NewSessionDialog *dialog = new NewSessionDialog("serial", this);
-    dialog->show();
+    if (newSerialSessionDialog == nullptr) {
+        newSerialSessionDialog = new NewSessionDialog("serial", this);
+        QObject::connect(newSerialSessionDialog, &NewSessionDialog::sessionListUpdate, sessionManager, &SessionManager::updateSessionList);
+    }
+    newSerialSessionDialog->show();
 }
 
 void MainWindow::onActionNewSSHSession() {
-    NewSessionDialog *dialog = new NewSessionDialog("ssh", this);
-    dialog->show();
+    if (newSSHSessionDialog == nullptr) {
+        newSSHSessionDialog = new NewSessionDialog("ssh", this);
+        QObject::connect(newSSHSessionDialog, &NewSessionDialog::sessionListUpdate, sessionManager, &SessionManager::updateSessionList);
+    }
+    newSSHSessionDialog->show();
 }
 
 void MainWindow::onActionNewLocalShellSession() {
-    NewSessionDialog *dialog = new NewSessionDialog("local", this);
-    dialog->show();
+    if (newLocalShellSessionDialog == nullptr) {
+        newLocalShellSessionDialog = new NewSessionDialog("local", this);
+        QObject::connect(newLocalShellSessionDialog, &NewSessionDialog::sessionListUpdate, sessionManager, &SessionManager::updateSessionList);
+    }
+    newLocalShellSessionDialog->show();
 }
 
 

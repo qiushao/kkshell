@@ -18,7 +18,7 @@ Q_OBJECT
 public:
     explicit SessionManager(QWidget *parent = nullptr);
     ~SessionManager() override;
-
+    void updateSessionList();
     void onItemDoubleClicked(QTableWidgetItem *item);
 
 signals:
@@ -26,9 +26,10 @@ signals:
 
 private:
     void onActionEditSession();
-    void onActionDeleteSession();
 
+    void onActionDeleteSession();
     void fillSessionList();
+
     void addLocalShellSessionToList(std::string session, int row);
     void addSerialSessionToList(std::string session, int row);
     void addSSHSessionToList(std::string session, int row);

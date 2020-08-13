@@ -5,6 +5,7 @@
 #include "session_manager.h"
 #include <QDebug>
 #include <QHeaderView>
+#include <QMessageBox>
 #include "widget/edit_session_dialog.h"
 #include "common/config/config_manager.h"
 #include "resources/forms/ui_session_manager.h"
@@ -106,6 +107,24 @@ void SessionManager::onActionEditSession() {
 }
 
 void SessionManager::onActionDeleteSession() {
+    std::string sessionName = getSelectSessionName();
+    QMessageBox msgBox;
+    msgBox.setMinimumSize(640, 480);
+    msgBox.setText("warning:");
+    msgBox.setInformativeText(("are you sure to delete session: " + sessionName + " ?").c_str());
+    msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+    msgBox.setDefaultButton(QMessageBox::Ok);
+    int ret = msgBox.exec();
+    if(ret == QMessageBox::Ok) {
+        ConfigManager *conf = ConfigManager::getInstance();
+        conf->deleteSection(sessionName.c_str());
+        conf->deleteKey("sessions", sessionName.c_str());
+        updateSessionList();
+    }
+}
 
+void SessionManager::updateSessionList() {
+    sessionListView->clear();
+    fillSessionList();
 }
 

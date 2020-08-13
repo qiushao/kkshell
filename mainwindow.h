@@ -5,6 +5,7 @@
 #include "terminal/base_terminal.h"
 #include "settings.h"
 #include "session_manager.h"
+#include "widget/new_session_dialog.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -50,6 +51,9 @@ private:
     Ui::MainWindow *ui = nullptr;
     Settings *settingDialog = nullptr;
     SessionManager *sessionManager = nullptr;
+    NewSessionDialog *newLocalShellSessionDialog = nullptr;
+    NewSessionDialog *newSSHSessionDialog = nullptr;
+    NewSessionDialog *newSerialSessionDialog = nullptr;
     QTabWidget *tabWidget = nullptr;
     BaseTerminal *currentTab = nullptr;
 };

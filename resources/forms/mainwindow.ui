@@ -29,7 +29,7 @@
     </property>
     <widget class="QMenu" name="menunew">
      <property name="title">
-      <string>new</string>
+      <string> new session</string>
      </property>
      <addaction name="actionNewSerialSession"/>
      <addaction name="actionNewSSHSession"/>

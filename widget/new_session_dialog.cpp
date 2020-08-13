@@ -6,6 +6,7 @@
 #include <QDebug>
 #include <QSerialPortInfo>
 #include <QSerialPort>
+#include <QMessageBox>
 #include "common/config/config_manager.h"
 
 NewSessionDialog::NewSessionDialog(const std::string &sessionType, QWidget *parent): QDialog(parent) {
@@ -82,10 +83,10 @@ void NewSessionDialog::newSerialSessionLayout() {
     serialBaudRateComboBox = new QComboBox();
     serialBaudRateLayout->addWidget(serialBaudRateLabel);
     serialBaudRateLayout->addWidget(serialBaudRateComboBox);
-    serialBaudRateComboBox->addItem("9600", QSerialPort::Baud9600);
-    serialBaudRateComboBox->addItem("19200", QSerialPort::Baud19200);
-    serialBaudRateComboBox->addItem("38400", QSerialPort::Baud38400);
-    serialBaudRateComboBox->addItem("115200", QSerialPort::Baud115200);
+    serialBaudRateComboBox->addItem("9600", "9600");
+    serialBaudRateComboBox->addItem("19200", "19200");
+    serialBaudRateComboBox->addItem("38400", "38400");
+    serialBaudRateComboBox->addItem("115200", "115200");
     serialBaudRateComboBox->setCurrentText("115200");
     serialSessionLayout->addLayout(serialBaudRateLayout);
 
@@ -94,10 +95,10 @@ void NewSessionDialog::newSerialSessionLayout() {
     serialDataBitsComboBox = new QComboBox();
     serialDataBitsLayout->addWidget(serialDataBitsLabel);
     serialDataBitsLayout->addWidget(serialDataBitsComboBox);
-    serialDataBitsComboBox->addItem("5", QSerialPort::Data5);
-    serialDataBitsComboBox->addItem("6", QSerialPort::Data6);
-    serialDataBitsComboBox->addItem("7", QSerialPort::Data7);
-    serialDataBitsComboBox->addItem("8", QSerialPort::Data8);
+    serialDataBitsComboBox->addItem("5", "5");
+    serialDataBitsComboBox->addItem("6", "6");
+    serialDataBitsComboBox->addItem("7", "7");
+    serialDataBitsComboBox->addItem("8", "8");
     serialDataBitsComboBox->setCurrentText("8");
     serialSessionLayout->addLayout(serialDataBitsLayout);
 
@@ -106,8 +107,8 @@ void NewSessionDialog::newSerialSessionLayout() {
     serialStopBitsComboBox = new QComboBox();
     serialStopBitsLayout->addWidget(serialStopBitsLabel);
     serialStopBitsLayout->addWidget(serialStopBitsComboBox);
-    serialStopBitsComboBox->addItem("1", QSerialPort::OneStop);
-    serialStopBitsComboBox->addItem("2", QSerialPort::TwoStop);
+    serialStopBitsComboBox->addItem("1", "1");
+    serialStopBitsComboBox->addItem("2", "2");
     serialStopBitsComboBox->setCurrentText("1");
     serialSessionLayout->addLayout(serialStopBitsLayout);
 
@@ -116,12 +117,12 @@ void NewSessionDialog::newSerialSessionLayout() {
     serialParityComboBox = new QComboBox();
     serialParityLayout->addWidget(serialParityLabel);
     serialParityLayout->addWidget(serialParityComboBox);
-    serialParityComboBox->addItem(tr("None"), QSerialPort::NoParity);
-    serialParityComboBox->addItem(tr("Even"), QSerialPort::EvenParity);
-    serialParityComboBox->addItem(tr("Odd"), QSerialPort::OddParity);
-    serialParityComboBox->addItem(tr("Mark"), QSerialPort::MarkParity);
-    serialParityComboBox->addItem(tr("Space"), QSerialPort::SpaceParity);
-    serialParityComboBox->setCurrentText("None");
+    serialParityComboBox->addItem(tr("0"), "0");
+    serialParityComboBox->addItem(tr("2"), "2");
+    serialParityComboBox->addItem(tr("3"), "3");
+    serialParityComboBox->addItem(tr("4"), "4");
+    serialParityComboBox->addItem(tr("5"), "5");
+    serialParityComboBox->setCurrentText("0");
     serialSessionLayout->addLayout(serialParityLayout);
 
     serialFlowControlLayout = new QHBoxLayout();
@@ -129,9 +130,10 @@ void NewSessionDialog::newSerialSessionLayout() {
     serialFlowControlComboBox = new QComboBox();
     serialFlowControlLayout->addWidget(serialFlowControlLabel);
     serialFlowControlLayout->addWidget(serialFlowControlComboBox);
-    serialFlowControlComboBox->addItem(tr("None"), QSerialPort::NoFlowControl);
-    serialFlowControlComboBox->addItem(tr("RTS/CTS"), QSerialPort::HardwareControl);
-    serialFlowControlComboBox->addItem(tr("XON/XOFF"), QSerialPort::SoftwareControl);
+    serialFlowControlComboBox->addItem(tr("0"), "0");
+    serialFlowControlComboBox->addItem(tr("1"), "1");
+    serialFlowControlComboBox->addItem(tr("2"), "2");
+    serialFlowControlComboBox->setCurrentText("0");
     serialSessionLayout->addLayout(serialFlowControlLayout);
 }
 
@@ -164,6 +166,14 @@ void NewSessionDialog::newSSHSessionLayout() {
     sshAuthTypeEdit->addItem("ssh-key", "ssh-key");
     sshAuthTypeEdit->setCurrentText("passwd");
     sshSessionLayout->addLayout(sshAuthTypeLayout);
+    sshAuthTypeEdit->setEditable(false);
+
+    sshUserLayout = new QHBoxLayout();
+    sshUserLabel = new QLabel("user:");
+    sshUserEdit = new QLineEdit();
+    sshUserLayout->addWidget(sshUserLabel);
+    sshUserLayout->addWidget(sshUserEdit);
+    sshSessionLayout->addLayout(sshUserLayout);
 
     sshPasswdLayout = new QHBoxLayout();
     sshPasswdLabel = new QLabel("passwd:");
@@ -178,6 +188,7 @@ void NewSessionDialog::newSSHSessionLayout() {
     sshKeyFileLayout->addWidget(sshKeyFileLabel);
     sshKeyFileLayout->addWidget(sshKeyFileEdit);
     sshSessionLayout->addLayout(sshKeyFileLayout);
+    sshKeyFileEdit->setEnabled(false);
 }
 
 void NewSessionDialog::newButtonLayout() {
@@ -189,4 +200,79 @@ void NewSessionDialog::newButtonLayout() {
     applyButton = new QPushButton("apply");
     buttonLayout->addWidget(cancelButton);
     buttonLayout->addWidget(applyButton);
+
+    QObject::connect(applyButton, &QPushButton::clicked, this, &NewSessionDialog::onApplyButtonClicked);
+    QObject::connect(cancelButton, &QPushButton::clicked, this, &NewSessionDialog::onCancelButtonClicked);
+}
+
+void NewSessionDialog::onApplyButtonClicked() {
+    ConfigManager *conf = ConfigManager::getInstance();
+    std::string sessionName = sessionNameEidt->text().toStdString();
+    if (isEdit) {
+        saveSession();
+        if (sessionName != oldSessionName) {
+            conf->deleteSection(oldSessionName.c_str());
+            conf->deleteKey("sessions", oldSessionName.c_str());
+        }
+    } else {
+        std::string type = conf->getString("sessions", sessionName.c_str(), "unknown");
+        if (type == "unknown") {
+            saveSession();
+        } else {
+            QMessageBox msgBox;
+            msgBox.setText("warning:");
+            msgBox.setInformativeText("the session name is already exist, please changed the session name!!! ");
+            msgBox.setStandardButtons(QMessageBox::Ok);
+            msgBox.setDefaultButton(QMessageBox::Ok);
+            msgBox.exec();
+        }
+    }
+}
+
+void NewSessionDialog::onCancelButtonClicked() {
+    hide();
+}
+
+void NewSessionDialog::saveSession() {
+    ConfigManager *conf = ConfigManager::getInstance();
+    std::string sessionName = sessionNameEidt->text().toStdString();
+    std::string sessionType = sessionTypeComboBox->currentText().toStdString();
+
+    if (sessionType == "local") {
+        conf->setCString("sessions", sessionName.c_str(), sessionType.c_str());
+    } else if (sessionType == "serial") {
+        std::string dev = serialDevComboBox->currentText().toStdString();
+        std::string baudRate = serialBaudRateComboBox->currentText().toStdString();
+        std::string dataBits = serialDataBitsComboBox->currentText().toStdString();
+        std::string stopBits = serialStopBitsComboBox->currentText().toStdString();
+        std::string parity = serialParityComboBox->currentText().toStdString();
+        std::string flowControl = serialFlowControlComboBox->currentText().toStdString();
+        conf->setCString(sessionName.c_str(), "dev", dev.c_str());
+        conf->setCString(sessionName.c_str(), "baudRate", baudRate.c_str());
+        conf->setCString(sessionName.c_str(), "dataBits", dataBits.c_str());
+        conf->setCString(sessionName.c_str(), "stopBits", stopBits.c_str());
+        conf->setCString(sessionName.c_str(), "parity", parity.c_str());
+        conf->setCString(sessionName.c_str(), "flowControl", flowControl.c_str());
+        conf->setCString("sessions", sessionName.c_str(), "serial");
+
+    } else if (sessionType == "ssh") {
+        std::string host = sshHostEdit->text().toStdString();
+        std::string port = sshPortEdit->text().toStdString();
+        std::string authType = sshAuthTypeEdit->currentText().toStdString();
+        std::string user = sshUserEdit->text().toStdString();
+        std::string passwd = sshPasswdEdit->text().toStdString();
+        std::string keyFile = sshKeyFileEdit->text().toStdString();
+        conf->setCString(sessionName.c_str(), "host", host.c_str());
+        conf->setCString(sessionName.c_str(), "port", port.c_str());
+        conf->setCString(sessionName.c_str(), "authType", authType.c_str());
+        conf->setCString(sessionName.c_str(), "user", user.c_str());
+        conf->setCString(sessionName.c_str(), "passwd", passwd.c_str());
+        conf->setCString(sessionName.c_str(), "keyFile", keyFile.c_str());
+        conf->setCString("sessions", sessionName.c_str(), "ssh");
+    } else {
+        qDebug() << "session type error" << endl;
+        return;
+    }
+    hide();
+    emit sessionListUpdate();
 }

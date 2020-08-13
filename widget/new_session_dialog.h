@@ -14,15 +14,27 @@
 
 class NewSessionDialog : public QDialog {
 
+Q_OBJECT
+
 public:
     explicit NewSessionDialog(const std::string &sessionType, QWidget *parent);
     ~NewSessionDialog() override;
+
+    signals:
+    void sessionListUpdate();
 
 protected:
     void initViews(const std::string &sessionType);
     void newSerialSessionLayout();
     void newSSHSessionLayout();
     void newButtonLayout();
+
+    virtual void onApplyButtonClicked();
+    virtual void onCancelButtonClicked();
+    void saveSession();
+
+    bool isEdit = false;
+    std::string oldSessionName = "";
 
     QVBoxLayout *mainLayout = nullptr;
     QHBoxLayout *sessionTypeLayout = nullptr;
@@ -63,6 +75,9 @@ protected:
     QHBoxLayout *sshAuthTypeLayout = nullptr;
     QLabel *sshAuthTypeLabel = nullptr;
     QComboBox *sshAuthTypeEdit = nullptr;
+    QHBoxLayout *sshUserLayout = nullptr;
+    QLabel *sshUserLabel = nullptr;
+    QLineEdit *sshUserEdit = nullptr;
     QHBoxLayout *sshPasswdLayout = nullptr;
     QLabel *sshPasswdLabel = nullptr;
     QLineEdit *sshPasswdEdit = nullptr;

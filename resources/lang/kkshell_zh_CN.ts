@@ -29,12 +29,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/mainwindow.ui" line="32"/>
-        <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="201"/>
-        <source>new</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../forms/mainwindow.ui" line="47"/>
         <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="202"/>
         <source>edit</source>
@@ -107,6 +101,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../forms/mainwindow.ui" line="32"/>
+        <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="201"/>
+        <source> new session</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../forms/mainwindow.ui" line="139"/>
         <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="179"/>
         <source>copy</source>
@@ -170,39 +170,35 @@
 <context>
     <name>NewSessionDialog</name>
     <message>
-        <location filename="../../widget/new_session_dialog.cpp" line="119"/>
-        <location filename="../../widget/new_session_dialog.cpp" line="132"/>
-        <source>None</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../../widget/new_session_dialog.cpp" line="120"/>
-        <source>Even</source>
+        <location filename="../../widget/new_session_dialog.cpp" line="133"/>
+        <source>0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../widget/new_session_dialog.cpp" line="121"/>
-        <source>Odd</source>
+        <location filename="../../widget/new_session_dialog.cpp" line="135"/>
+        <source>2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../widget/new_session_dialog.cpp" line="122"/>
-        <source>Mark</source>
+        <source>3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../widget/new_session_dialog.cpp" line="123"/>
-        <source>Space</source>
+        <source>4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widget/new_session_dialog.cpp" line="133"/>
-        <source>RTS/CTS</source>
+        <location filename="../../widget/new_session_dialog.cpp" line="124"/>
+        <source>5</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../widget/new_session_dialog.cpp" line="134"/>
-        <source>XON/XOFF</source>
+        <source>1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
