@@ -75,15 +75,17 @@ void SSHTerminal::connect() {
     /* Some environment variables may be set,
      * It's up to the server which ones it'll allow though
      */
-    libssh2_channel_setenv(channel_, "FOO", "bar");
+    libssh2_channel_setenv(channel_, "TERM", "xterm-256color");
 
     /* Request a terminal with 'vanilla' terminal emulation
      * See /etc/termcap for more options
      */
-    if(libssh2_channel_request_pty(channel_, "vanilla")) {
+    if(libssh2_channel_request_pty(channel_, "xterm-256color")) {
         fprintf(stderr, "Failed requesting pty\n");
         return;
     }
+
+//    libssh2_channel_request_pty_size(channel_, 120, 24);
 
     /* Open a SHELL on that pty */
     if(libssh2_channel_shell(channel_)) {

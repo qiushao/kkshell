@@ -35,10 +35,12 @@
      <addaction name="actionNewSSHSession"/>
      <addaction name="actionNewLocalShellSession"/>
     </widget>
+    <addaction name="menunew"/>
+    <addaction name="actionOpenSession"/>
+    <addaction name="separator"/>
     <addaction name="actionConnect"/>
     <addaction name="actionDisconnect"/>
-    <addaction name="actionOpenSession"/>
-    <addaction name="menunew"/>
+    <addaction name="separator"/>
     <addaction name="actionSettings"/>
     <addaction name="actionExit"/>
    </widget>
@@ -83,7 +85,6 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="actionSettings"/>
    <addaction name="actionOpenSession"/>
    <addaction name="separator"/>
    <addaction name="actionConnect"/>
