@@ -39,6 +39,11 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::onTabChanged(int index) {
+    if (index < 0) {
+        ui->actionConnect->setEnabled(false);
+        ui->actionDisconnect->setEnabled(false);
+        return;
+    }
     currentTab = dynamic_cast<BaseTerminal *>(tabWidget->widget(index));
     if(currentTab->isConnect()) {
         ui->actionConnect->setEnabled(false);
@@ -59,22 +64,34 @@ void MainWindow::onTabCloseRequested(int index) {
 }
 
 void MainWindow::onActionCopy() {
-    currentTab->copyClipboard();
+    if (currentTab != nullptr) {
+        currentTab->copyClipboard();
+    }
 }
 
 void MainWindow::onActionPaste() {
-    currentTab->pasteClipboard();
+    if (currentTab != nullptr) {
+        currentTab->pasteClipboard();
+    }
 }
 
 void MainWindow::onActionClear() {
-    currentTab->clear();
+    if (currentTab != nullptr) {
+        currentTab->clear();
+    }
 }
 
 void MainWindow::onActionFind() {
-    currentTab->toggleShowSearchBar();
+    if (currentTab != nullptr) {
+        currentTab->toggleShowSearchBar();
+    }
 }
 
 void MainWindow::onActionConnect() {
+    if (currentTab == nullptr) {
+        return;
+    }
+
     currentTab->connect();
     if (currentTab->isConnect()) {
         ui->actionConnect->setEnabled(false);
@@ -84,6 +101,9 @@ void MainWindow::onActionConnect() {
 }
 
 void MainWindow::onActionDisconnect() {
+    if (currentTab == nullptr) {
+        return;
+    }
     currentTab->disconnect();
     if (!currentTab->isConnect()) {
         ui->actionConnect->setEnabled(true);
@@ -135,6 +155,9 @@ void MainWindow::buttonBarInit() {
 }
 
 void MainWindow::receiveCommand(const QString &command) {
+    if (currentTab == nullptr) {
+        return;
+    }
     QString str = command;
     str.replace(QString("\\r"), QString("\r"));
     currentTab->sendText(str);

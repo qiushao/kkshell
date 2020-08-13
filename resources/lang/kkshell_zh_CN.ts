@@ -18,151 +18,151 @@
     <name>MainWindow</name>
     <message>
         <location filename="../forms/mainwindow.ui" line="14"/>
-        <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="175"/>
+        <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="180"/>
         <source>MainWindow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/mainwindow.ui" line="28"/>
-        <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="200"/>
+        <location filename="../forms/mainwindow.ui" line="34"/>
+        <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="205"/>
         <source>file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/mainwindow.ui" line="47"/>
-        <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="202"/>
+        <location filename="../forms/mainwindow.ui" line="55"/>
+        <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="207"/>
         <source>edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/mainwindow.ui" line="56"/>
-        <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="203"/>
+        <location filename="../forms/mainwindow.ui" line="64"/>
+        <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="208"/>
         <source>tools</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/mainwindow.ui" line="61"/>
-        <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="204"/>
+        <location filename="../forms/mainwindow.ui" line="69"/>
+        <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="209"/>
         <source>about</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/mainwindow.ui" line="66"/>
-        <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="205"/>
+        <location filename="../forms/mainwindow.ui" line="74"/>
+        <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="210"/>
         <source>view</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/mainwindow.ui" line="78"/>
-        <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="206"/>
+        <location filename="../forms/mainwindow.ui" line="86"/>
+        <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="211"/>
         <source>toolBar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/mainwindow.ui" line="97"/>
-        <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="207"/>
+        <location filename="../forms/mainwindow.ui" line="104"/>
+        <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="212"/>
         <source>toolBar_2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/mainwindow.ui" line="112"/>
-        <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="176"/>
+        <location filename="../forms/mainwindow.ui" line="119"/>
+        <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="181"/>
         <source>connect</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/mainwindow.ui" line="121"/>
-        <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="177"/>
+        <location filename="../forms/mainwindow.ui" line="128"/>
+        <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="182"/>
         <source>disconnect</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/mainwindow.ui" line="205"/>
-        <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="197"/>
+        <location filename="../forms/mainwindow.ui" line="212"/>
+        <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="202"/>
         <source>new serial session</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/mainwindow.ui" line="214"/>
-        <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="198"/>
+        <location filename="../forms/mainwindow.ui" line="221"/>
+        <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="203"/>
         <source>new ssh session</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/mainwindow.ui" line="223"/>
-        <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="199"/>
+        <location filename="../forms/mainwindow.ui" line="230"/>
+        <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="204"/>
         <source>new local shell session</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/mainwindow.ui" line="130"/>
-        <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="178"/>
+        <location filename="../forms/mainwindow.ui" line="137"/>
+        <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="183"/>
         <source>settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/mainwindow.ui" line="32"/>
-        <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="201"/>
+        <location filename="../forms/mainwindow.ui" line="38"/>
+        <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="206"/>
         <source> new session</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/mainwindow.ui" line="139"/>
-        <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="179"/>
+        <location filename="../forms/mainwindow.ui" line="146"/>
+        <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="184"/>
         <source>copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/mainwindow.ui" line="142"/>
-        <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="181"/>
+        <location filename="../forms/mainwindow.ui" line="149"/>
+        <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="186"/>
         <source>Ctrl+Shift+C</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/mainwindow.ui" line="151"/>
-        <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="183"/>
+        <location filename="../forms/mainwindow.ui" line="158"/>
+        <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="188"/>
         <source>paste</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/mainwindow.ui" line="154"/>
-        <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="185"/>
+        <location filename="../forms/mainwindow.ui" line="161"/>
+        <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="190"/>
         <source>Ctrl+Shift+V</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/mainwindow.ui" line="163"/>
-        <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="187"/>
+        <location filename="../forms/mainwindow.ui" line="170"/>
+        <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="192"/>
         <source>find</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/mainwindow.ui" line="166"/>
-        <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="189"/>
+        <location filename="../forms/mainwindow.ui" line="173"/>
+        <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="194"/>
         <source>Ctrl+F</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/mainwindow.ui" line="175"/>
-        <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="191"/>
+        <location filename="../forms/mainwindow.ui" line="182"/>
+        <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="196"/>
         <source>clear</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/mainwindow.ui" line="178"/>
-        <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="193"/>
+        <location filename="../forms/mainwindow.ui" line="185"/>
+        <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="198"/>
         <source>Ctrl+Shift+X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/mainwindow.ui" line="187"/>
-        <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="195"/>
+        <location filename="../forms/mainwindow.ui" line="194"/>
+        <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="200"/>
         <source>exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/mainwindow.ui" line="196"/>
-        <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="196"/>
+        <location filename="../forms/mainwindow.ui" line="203"/>
+        <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="201"/>
         <source>open session</source>
         <translation type="unfinished"></translation>
     </message>

@@ -20,8 +20,14 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>26</height>
+     <height>35</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Ubuntu</family>
+     <pointsize>14</pointsize>
+    </font>
    </property>
    <widget class="QMenu" name="menufile">
     <property name="title">
