@@ -108,11 +108,16 @@ void SSHTerminal::connect() {
 
 void SSHTerminal::disconnect() {
     connect_ = false;
+    sshReadThread_.join();
     if(channel_) {
         libssh2_channel_free(channel_);
         channel_ = NULL;
     }
-    sshReadThread_.join();
+    libssh2_session_disconnect(session_,"Normal Shutdown, Thank you for playing");
+    libssh2_session_free(session_);
+    ::close(sock_);
+    fprintf(stderr, "all done!\n");
+    libssh2_exit();
 }
 
 void SSHTerminal::threadLoop() {
@@ -132,7 +137,7 @@ void SSHTerminal::threadLoop() {
     fds[0].revents = LIBSSH2_POLLFD_POLLIN;
 
     while (connect_) {
-        if (libssh2_poll(fds, nfds, 10000) > 0) {
+        if (libssh2_poll(fds, nfds, 1000) > 0) {
             libssh2_channel_read(channel_, &buffer, 1);
             write(this->getPtySlaveFd(), &buffer, 1);
             fflush(stdout);
