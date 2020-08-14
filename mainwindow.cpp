@@ -20,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent)
     setWindowState(Qt::WindowMaximized);
     tabWidget = new QTabWidget(this);
     tabWidget->setTabsClosable(true);
+    tabWidget->setMovable(true);
     setCentralWidget(tabWidget);
 
     QObject::connect(tabWidget, &QTabWidget::currentChanged, this, &MainWindow::onTabChanged);
