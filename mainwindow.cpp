@@ -64,6 +64,15 @@ void MainWindow::onTabCloseRequested(int index) {
     delete tab;
 }
 
+void MainWindow::onActionSelectAll() {
+    if (currentTab != nullptr) {
+        qDebug() << "onActionSelectAll" << endl;
+        currentTab->setSelectionStart(0, 0);
+        currentTab->setSelectionEnd(currentTab->screenLinesCount(), currentTab->screenColumnsCount());
+        currentTab->copyClipboard();
+    }
+}
+
 void MainWindow::onActionCopy() {
     if (currentTab != nullptr) {
         currentTab->copyClipboard();
@@ -135,6 +144,7 @@ void MainWindow::actionInit() {
 
     QObject::connect(ui->actionConnect, &QAction::triggered, this, &MainWindow::onActionConnect);
     QObject::connect(ui->actionDisconnect, &QAction::triggered, this, &MainWindow::onActionDisconnect);
+    QObject::connect(ui->actionSelectAll, &QAction::triggered, this, &MainWindow::onActionSelectAll);
     QObject::connect(ui->actionCopy, &QAction::triggered, this, &MainWindow::onActionCopy);
     QObject::connect(ui->actionPaste, &QAction::triggered, this, &MainWindow::onActionPaste);
     QObject::connect(ui->actionClear, &QAction::triggered, this, &MainWindow::onActionClear);
@@ -237,5 +247,6 @@ void MainWindow::onActionNewLocalShellSession() {
     }
     newLocalShellSessionDialog->show();
 }
+
 
 

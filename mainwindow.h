@@ -30,6 +30,7 @@ public:
     void onActionOpenSession();
     void onActionConnect();
     void onActionDisconnect();
+    void onActionSelectAll();
     void onActionCopy();
     void onActionPaste();
     void onActionClear();

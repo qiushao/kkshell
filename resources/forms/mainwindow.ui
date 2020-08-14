@@ -55,6 +55,7 @@
      <string>edit</string>
     </property>
     <addaction name="actionCopy"/>
+    <addaction name="actionSelectAll"/>
     <addaction name="actionPaste"/>
     <addaction name="actionFind"/>
     <addaction name="actionClear"/>
@@ -143,7 +144,10 @@
      <normaloff>:/images/copy.png</normaloff>:/images/copy.png</iconset>
    </property>
    <property name="text">
-    <string>copy</string>
+    <string>copy selected</string>
+   </property>
+   <property name="toolTip">
+    <string>copy selected</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+C</string>
@@ -228,6 +232,21 @@
    </property>
    <property name="text">
     <string>new local shell session</string>
+   </property>
+  </action>
+  <action name="actionSelectAll">
+   <property name="icon">
+    <iconset resource="../resources.qrc">
+     <normaloff>:/images/copy.png</normaloff>:/images/copy.png</iconset>
+   </property>
+   <property name="text">
+    <string>copy all</string>
+   </property>
+   <property name="toolTip">
+    <string>copy all</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+A</string>
    </property>
   </action>
  </widget>
