@@ -12,8 +12,10 @@
 struct SSHSettings {
     std::string host;
     int port;
+    std::string authType;
     std::string user;
     std::string passwd;
+    std::string keyFile;
 };
 
 class SSHTerminal : public BaseTerminal {

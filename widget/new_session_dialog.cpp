@@ -191,7 +191,6 @@ void NewSessionDialog::newSSHSessionLayout() {
     sshKeyFileLayout->addWidget(sshKeyFileLabel);
     sshKeyFileLayout->addWidget(sshKeyFileEdit);
     sshSessionLayout->addLayout(sshKeyFileLayout);
-    sshKeyFileEdit->setEnabled(false);
 }
 
 void NewSessionDialog::newButtonLayout() {

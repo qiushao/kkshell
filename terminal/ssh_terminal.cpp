@@ -58,12 +58,25 @@ void SSHTerminal::connect() {
     }
     fprintf(stderr, "\n");
 
-    if(libssh2_userauth_password(session_, settings_.user.c_str(), settings_.passwd.c_str())) {
-        fprintf(stderr, "\tAuthentication by password failed!\n");
-        return;
-    } else {
-        fprintf(stderr, "\tAuthentication by password succeeded.\n");
+    if (settings_.authType == "passwd") {
+        if(libssh2_userauth_password(session_, settings_.user.c_str(), settings_.passwd.c_str())) {
+            fprintf(stderr, "\tAuthentication by password failed!\n");
+            return;
+        } else {
+            fprintf(stderr, "\tAuthentication by password succeeded.\n");
+        }
+    } else if (settings_.authType == "ssh-key") {
+        std::string privateKey = settings_.keyFile.substr(0, settings_.keyFile.find_last_of('.'));
+        if(libssh2_userauth_publickey_fromfile(session_, settings_.user.c_str(), settings_.keyFile.c_str(), privateKey.c_str(), settings_.passwd.c_str())) {
+            fprintf(stderr, "\tAuthentication by public key failed!\n");
+            return;
+        }
+        else {
+            fprintf(stderr, "\tAuthentication by public key succeeded.\n");
+        }
     }
+
+
 
     /* Request a shell */
     channel_ = libssh2_channel_open_session(session_);

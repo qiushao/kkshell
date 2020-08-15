@@ -220,8 +220,10 @@ BaseTerminal* MainWindow::createSSHSession(std::string session) {
     sshSettings.host = conf->getString(session.c_str(), "host");
     sshSettings.port = conf->getInt(session.c_str(), "port");
     sshSettings.user = conf->getString(session.c_str(), "user");
+    sshSettings.authType = conf->getString(session.c_str(), "authType");
     std::string aesPasswd = conf->getString(session.c_str(), "passwd");
     sshSettings.passwd = AESUtils::aes_decrypt(aesPasswd);
+    sshSettings.keyFile = conf->getString(session.c_str(), "keyFile");
     SSHTerminal *terminal = new SSHTerminal(sshSettings, this);
     return terminal;
 }
