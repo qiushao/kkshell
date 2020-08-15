@@ -107,6 +107,9 @@ void SSHTerminal::connect() {
 }
 
 void SSHTerminal::disconnect() {
+    if (!connect_) {
+        return;
+    }
     connect_ = false;
     sshReadThread_.join();
     if(channel_) {

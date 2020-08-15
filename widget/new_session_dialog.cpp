@@ -8,6 +8,7 @@
 #include <QSerialPort>
 #include <QMessageBox>
 #include "common/config/config_manager.h"
+#include "common/utils/aes_utils.h"
 
 NewSessionDialog::NewSessionDialog(const std::string &sessionType, QWidget *parent): QDialog(parent) {
     setWindowTitle("New Session");
@@ -261,12 +262,13 @@ void NewSessionDialog::saveSession() {
         std::string authType = sshAuthTypeEdit->currentText().toStdString();
         std::string user = sshUserEdit->text().toStdString();
         std::string passwd = sshPasswdEdit->text().toStdString();
+        std::string aesPasswd = AESUtils::aes_encrypt(passwd);
         std::string keyFile = sshKeyFileEdit->text().toStdString();
         conf->setCString(sessionName.c_str(), "host", host.c_str());
         conf->setCString(sessionName.c_str(), "port", port.c_str());
         conf->setCString(sessionName.c_str(), "authType", authType.c_str());
         conf->setCString(sessionName.c_str(), "user", user.c_str());
-        conf->setCString(sessionName.c_str(), "passwd", passwd.c_str());
+        conf->setCString(sessionName.c_str(), "passwd", aesPasswd.c_str());
         conf->setCString(sessionName.c_str(), "keyFile", keyFile.c_str());
         conf->setCString("sessions", sessionName.c_str(), "ssh");
     } else {

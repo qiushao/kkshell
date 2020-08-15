@@ -31,7 +31,7 @@ add_executable(kkshell
         )
 
 set(THIRD_PARTY_LIBS simpleini)
-set(PROJECT_LIBS config terminals)
+set(PROJECT_LIBS config utils terminals)
 
 target_link_libraries(kkshell PRIVATE Qt5::Core Qt5::Widgets ${THIRD_PARTY_LIBS} ${PROJECT_LIBS})
 

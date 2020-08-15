@@ -3,6 +3,7 @@
 #include <QDebug>
 #include "resources/forms/ui_mainwindow.h"
 #include "common/config/config_manager.h"
+#include "common/utils/aes_utils.h"
 #include "terminal/local_terminal.h"
 #include "terminal/serial_terminal.h"
 #include "terminal/ssh_terminal.h"
@@ -219,7 +220,8 @@ BaseTerminal* MainWindow::createSSHSession(std::string session) {
     sshSettings.host = conf->getString(session.c_str(), "host");
     sshSettings.port = conf->getInt(session.c_str(), "port");
     sshSettings.user = conf->getString(session.c_str(), "user");
-    sshSettings.passwd = conf->getString(session.c_str(), "passwd");
+    std::string aesPasswd = conf->getString(session.c_str(), "passwd");
+    sshSettings.passwd = AESUtils::aes_decrypt(aesPasswd);
     SSHTerminal *terminal = new SSHTerminal(sshSettings, this);
     return terminal;
 }
