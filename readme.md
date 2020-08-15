@@ -12,6 +12,7 @@ sudo apt install qt5-doc qt5-doc-html qtbase5-doc-html qtbase5-examples
 sudo apt install libqt5serialport5-dev qt5serialport-examples
 sudo apt install libqtermwidget5-0-dev libutf8proc-dev
 sudo apt install libssh2-1-dev
+sudo apt install libssl-dev
 ``` 
 
 ### build and run
@@ -28,3 +29,4 @@ make
 - [QT](https://www.qt.io/developers)
 - [qtermwidget](https://github.com/lxqt/qtermwidget)
 - [ssh2](https://github.com/libssh2/libssh2)
+- [openssl](https://github.com/openssl/openssl)
