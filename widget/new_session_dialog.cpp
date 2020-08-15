@@ -154,6 +154,7 @@ void NewSessionDialog::newSSHSessionLayout() {
     sshPortLayout = new QHBoxLayout();
     sshPortLabel = new QLabel("port:");
     sshPortEdit = new QLineEdit();
+    sshPortEdit->setText("22");
     sshPortLayout->addWidget(sshPortLabel);
     sshPortLayout->addWidget(sshPortEdit);
     sshSessionLayout->addLayout(sshPortLayout);
@@ -179,6 +180,7 @@ void NewSessionDialog::newSSHSessionLayout() {
     sshPasswdLayout = new QHBoxLayout();
     sshPasswdLabel = new QLabel("passwd:");
     sshPasswdEdit = new QLineEdit();
+    sshPasswdEdit->setEchoMode(QLineEdit::EchoMode::Password);
     sshPasswdLayout->addWidget(sshPasswdLabel);
     sshPasswdLayout->addWidget(sshPasswdEdit);
     sshSessionLayout->addLayout(sshPasswdLayout);
