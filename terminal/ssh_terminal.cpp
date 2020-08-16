@@ -105,8 +105,6 @@ void SSHTerminal::connect() {
         return;
     }
 
-    libssh2_channel_request_pty_size(channel_, 211, 34);
-
     // 把在终端的输入传给 ssh
     QObject::connect(this, &QTermWidget::sendData, [this](const char *data, int size) {
         if(connect_) {
@@ -164,9 +162,9 @@ void SSHTerminal::threadLoop() {
 
 void SSHTerminal::resizeEvent(QResizeEvent *event) {
     QTermWidget::resizeEvent(event);
-    QSize size = event->size();
-    qDebug() << "size changed to " << size.width() << " x " << size.height() << endl;
-//    if (connect_) {
-//        libssh2_channel_request_pty_size(channel_, size.width(), size.height());
-//    }
+    calGeometry();
+    qDebug() << "size changed to " << columns_ << " x " << lines_ << endl;
+    if (connect_) {
+        libssh2_channel_request_pty_size(channel_, columns_, lines_);
+    }
 }

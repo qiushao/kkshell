@@ -10,15 +10,15 @@
 BaseTerminal::BaseTerminal(QWidget *parent) : QTermWidget(0, parent) {
     connect_ = false;
 
-    QFont font;
     ConfigManager *conf = ConfigManager::getInstance();
 
     //font
     QString fontFamily = conf->getCString("app", "fontFamily", "Monospace");
     int fontSize = conf->getInt("app", "fontSize", 18);
-    font.setFamily(fontFamily);
-    font.setPointSize(fontSize);
-    setTerminalFont(font);
+    font_ = new QFont();
+    font_->setFamily(fontFamily);
+    font_->setPointSize(fontSize);
+    setTerminalFont(*font_);
     setHistorySize(128000);
 //    setTerminalSizeHint(false);
     QStringList env;
@@ -31,6 +31,8 @@ BaseTerminal::BaseTerminal(QWidget *parent) : QTermWidget(0, parent) {
 
     //set scroll bar
     setScrollBarPosition(ScrollBarRight);
+
+    calFontGeometry();
 }
 
 BaseTerminal::~BaseTerminal() {
@@ -43,4 +45,24 @@ void BaseTerminal::clear() {
 
 bool BaseTerminal::isConnect() {
     return connect_;
+}
+
+#define REPCHAR   "ABCDEFGHIJKLMNOPQRSTUVWXYZ" \
+                  "abcdefgjijklmnopqrstuvwxyz" \
+                  "0123456789./+@"
+
+void BaseTerminal::calFontGeometry() {
+
+    QFontMetrics fm(*font_);
+    fontHeight_ = fm.height();
+    fontWidth_ = qRound((double)fm.width(QLatin1String(REPCHAR))/(double)qstrlen(REPCHAR));
+}
+
+void BaseTerminal::calGeometry() {
+    int baseMargin = 1;
+    int scrollBarWidth = 12;
+    int contentWidth = contentsRect().width() - 2 * baseMargin - scrollBarWidth;
+    int contentHeight = contentsRect().height() - 2 * baseMargin + 1;
+    columns_ = qMax(1, contentWidth / fontWidth_);
+    lines_ = qMax(1,contentHeight / fontHeight_);
 }
