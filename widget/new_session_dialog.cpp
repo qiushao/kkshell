@@ -188,9 +188,13 @@ void NewSessionDialog::newSSHSessionLayout() {
     sshKeyFileLayout = new QHBoxLayout();
     sshKeyFileLabel = new QLabel("key file:");
     sshKeyFileEdit = new QLineEdit();
+    sshKeyFileEdit->setPlaceholderText("public key file path");
     sshKeyFileLayout->addWidget(sshKeyFileLabel);
     sshKeyFileLayout->addWidget(sshKeyFileEdit);
     sshSessionLayout->addLayout(sshKeyFileLayout);
+    sshKeyFileEdit->setEnabled(false);
+
+    QObject::connect(sshAuthTypeEdit, &QComboBox::currentTextChanged, this, &NewSessionDialog::onSSHAuthTypeChanged);
 }
 
 void NewSessionDialog::newButtonLayout() {
@@ -278,4 +282,12 @@ void NewSessionDialog::saveSession() {
     }
     hide();
     emit sessionListUpdate();
+}
+
+void NewSessionDialog::onSSHAuthTypeChanged(const QString &authType) {
+    if (authType == "passwd") {
+        sshKeyFileEdit->setEnabled(false);
+    } else if (authType == "ssh-key") {
+        sshKeyFileEdit->setEnabled(true);
+    }
 }

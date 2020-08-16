@@ -28,6 +28,7 @@ protected:
     void newSerialSessionLayout();
     void newSSHSessionLayout();
     void newButtonLayout();
+    void onSSHAuthTypeChanged(const QString &authType);
 
     virtual void onApplyButtonClicked();
     virtual void onCancelButtonClicked();
