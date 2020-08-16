@@ -8,6 +8,9 @@
 #include <qtermwidget5/qtermwidget.h>
 
 class BaseTerminal : public QTermWidget {
+
+Q_OBJECT
+
 public:
     explicit BaseTerminal(QWidget *parent);
     ~BaseTerminal() override;
@@ -16,6 +19,9 @@ public:
     virtual void disconnect() = 0;
     void clear();
     bool isConnect();
+
+signals:
+    void requestDisconnect(BaseTerminal *terminal);
 
 protected:
     void calFontGeometry();

@@ -50,6 +50,7 @@ private:
 private slots:
     void receiveCommand(const QString &command);
     void onOpenSession(std::string session);
+    void onRequestDisconnect(BaseTerminal *terminal);
 
 private:
     Ui::MainWindow *ui = nullptr;

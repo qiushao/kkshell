@@ -237,6 +237,8 @@ void MainWindow::onOpenSession(std::string session) {
         qDebug() << "unknown session type!!" << endl;
         return;
     }
+
+    QObject::connect(terminal, &BaseTerminal::requestDisconnect, this, &MainWindow::onRequestDisconnect);
     terminal->connect();
     tabWidget->addTab(terminal, *connectStateIcon, session.c_str());
     tabWidget->setCurrentWidget(terminal);
@@ -298,6 +300,16 @@ void MainWindow::onActionNewLocalShellSession() {
         QObject::connect(newLocalShellSessionDialog, &NewSessionDialog::sessionListUpdate, sessionManager, &SessionManager::updateSessionList);
     }
     newLocalShellSessionDialog->show();
+}
+
+void MainWindow::onRequestDisconnect(BaseTerminal *terminal) {
+    if (terminal == currentTab) {
+        onActionDisconnect();
+    } else {
+        int index = tabWidget->indexOf(terminal);
+        terminal->disconnect();
+        tabWidget->setTabIcon(index, *disconnectStateIcon);
+    }
 }
 
 

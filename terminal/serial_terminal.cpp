@@ -23,6 +23,9 @@ SerialTerminal::SerialTerminal(const SerialSettings &settings, QWidget *parent) 
         write(this->getPtySlaveFd(), data.data(), data.size());
     });
 
+    // 串口发生错误时的回调处理
+    QObject::connect(serial_, &QSerialPort::errorOccurred, this, &SerialTerminal::handleError);
+
     // Here we start an empty pty.
     this->startTerminalTeletype();
 }
@@ -51,5 +54,11 @@ void SerialTerminal::disconnect() {
     connect_ = false;
     if (serial_->isOpen()) {
         serial_->close();
+    }
+}
+
+void SerialTerminal::handleError(QSerialPort::SerialPortError error) {
+    if (error != QSerialPort::SerialPortError::NoError) {
+        emit requestDisconnect(this);
     }
 }

@@ -235,7 +235,7 @@
 <context>
     <name>SerialTerminal</name>
     <message>
-        <location filename="../../terminal/serial_terminal.cpp" line="44"/>
+        <location filename="../../terminal/serial_terminal.cpp" line="47"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>

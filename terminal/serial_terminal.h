@@ -21,11 +21,11 @@ class SerialTerminal : public BaseTerminal {
 public:
     explicit SerialTerminal(const SerialSettings &settings, QWidget *parent);
     ~SerialTerminal() override;
-public:
     void connect() override;
     void disconnect() override;
 
 private:
+    void handleError(QSerialPort::SerialPortError error);
     QSerialPort *serial_ = nullptr;
     SerialSettings settings_;
 };
