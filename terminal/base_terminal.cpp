@@ -20,7 +20,7 @@ BaseTerminal::BaseTerminal(QWidget *parent) : QTermWidget(0, parent) {
     font.setPointSize(fontSize);
     setTerminalFont(font);
     setHistorySize(128000);
-    setTerminalSizeHint(false);
+//    setTerminalSizeHint(false);
     QStringList env;
     env.append("TERM=xterm-256color");
     setEnvironment(env);

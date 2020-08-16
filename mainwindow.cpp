@@ -50,11 +50,11 @@ void MainWindow::onTabChanged(int index) {
     if(currentTab->isConnect()) {
         ui->actionConnect->setEnabled(false);
         ui->actionDisconnect->setEnabled(true);
-        ui->statusbar->showMessage("connect");
+        ui->statusBar->showMessage("connect");
     } else {
         ui->actionConnect->setEnabled(true);
         ui->actionDisconnect->setEnabled(false);
-        ui->statusbar->showMessage("disconnect");
+        ui->statusBar->showMessage("disconnect");
     }
 }
 
@@ -107,7 +107,7 @@ void MainWindow::onActionConnect() {
     if (currentTab->isConnect()) {
         ui->actionConnect->setEnabled(false);
         ui->actionDisconnect->setEnabled(true);
-        ui->statusbar->showMessage("connect");
+        ui->statusBar->showMessage("connect");
     }
 }
 
@@ -119,7 +119,7 @@ void MainWindow::onActionDisconnect() {
     if (!currentTab->isConnect()) {
         ui->actionConnect->setEnabled(true);
         ui->actionDisconnect->setEnabled(false);
-        ui->statusbar->showMessage("disconnect");
+        ui->statusBar->showMessage("disconnect");
     }
 }
 
@@ -133,6 +133,42 @@ void MainWindow::onActionSetting() {
 
 void MainWindow::onActionOpenSession() {
     sessionManager->show();
+}
+
+void MainWindow::onActionShowToolsBar() {
+    if (showToolsBar) {
+        ui->toolsBar->hide();
+        showToolsBar = false;
+        ui->actionShowToolsBar->setIconVisibleInMenu(false);
+    } else {
+        ui->toolsBar->show();
+        showToolsBar = true;
+        ui->actionShowToolsBar->setIconVisibleInMenu(true);
+    }
+}
+
+void MainWindow::onActionShowButtonBar() {
+    if (showButtonBar) {
+        ui->commandButtonBar->hide();
+        showButtonBar = false;
+        ui->actionShowButtonBar->setIconVisibleInMenu(false);
+    } else {
+        ui->commandButtonBar->show();
+        showButtonBar = true;
+        ui->actionShowButtonBar->setIconVisibleInMenu(true);
+    }
+}
+
+void MainWindow::onActionShowStatusBar() {
+    if (showStatusBar) {
+        ui->statusBar->hide();
+        showStatusBar = false;
+        ui->actionShowStatusBar->setIconVisibleInMenu(false);
+    } else {
+        ui->statusBar->show();
+        showStatusBar = true;
+        ui->actionShowStatusBar->setIconVisibleInMenu(true);
+    }
 }
 
 void MainWindow::actionInit() {
@@ -150,6 +186,10 @@ void MainWindow::actionInit() {
     QObject::connect(ui->actionPaste, &QAction::triggered, this, &MainWindow::onActionPaste);
     QObject::connect(ui->actionClear, &QAction::triggered, this, &MainWindow::onActionClear);
     QObject::connect(ui->actionFind, &QAction::triggered, this, &MainWindow::onActionFind);
+
+    QObject::connect(ui->actionShowToolsBar, &QAction::triggered, this, &MainWindow::onActionShowToolsBar);
+    QObject::connect(ui->actionShowButtonBar, &QAction::triggered, this, &MainWindow::onActionShowButtonBar);
+    QObject::connect(ui->actionShowStatusBar, &QAction::triggered, this, &MainWindow::onActionShowStatusBar);
 }
 
 void MainWindow::buttonBarInit() {
@@ -251,6 +291,7 @@ void MainWindow::onActionNewLocalShellSession() {
     }
     newLocalShellSessionDialog->show();
 }
+
 
 
 

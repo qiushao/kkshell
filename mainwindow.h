@@ -35,6 +35,9 @@ public:
     void onActionPaste();
     void onActionClear();
     void onActionFind();
+    void onActionShowToolsBar();
+    void onActionShowButtonBar();
+    void onActionShowStatusBar();
 
 private:
     void actionInit();
@@ -57,5 +60,9 @@ private:
     NewSessionDialog *newSerialSessionDialog = nullptr;
     QTabWidget *tabWidget = nullptr;
     BaseTerminal *currentTab = nullptr;
+
+    bool showToolsBar = true;
+    bool showButtonBar = true;
+    bool showStatusBar = true;
 };
 #endif // MAINWINDOW_H

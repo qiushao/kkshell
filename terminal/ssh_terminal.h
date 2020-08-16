@@ -25,6 +25,9 @@ public:
     void connect() override;
     void disconnect() override;
 
+protected:
+    void resizeEvent(QResizeEvent *event) override;
+
 private:
     void threadLoop();
 
