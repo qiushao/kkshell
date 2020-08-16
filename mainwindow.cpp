@@ -23,6 +23,11 @@ MainWindow::MainWindow(QWidget *parent)
     tabWidget->setMovable(true);
     setCentralWidget(tabWidget);
 
+    connectStateIcon = new QIcon();
+    disconnectStateIcon = new QIcon();
+    connectStateIcon->addFile(QString::fromUtf8(":/images/green.png"), QSize(), QIcon::Normal, QIcon::On);
+    disconnectStateIcon->addFile(QString::fromUtf8(":/images/red.png"), QSize(), QIcon::Normal, QIcon::On);
+
     QObject::connect(tabWidget, &QTabWidget::currentChanged, this, &MainWindow::onTabChanged);
     QObject::connect(tabWidget, &QTabWidget::tabCloseRequested, this, &MainWindow::onTabCloseRequested);
     QObject::connect(sessionManager, &SessionManager::openSession, this, &MainWindow::onOpenSession);
@@ -108,6 +113,8 @@ void MainWindow::onActionConnect() {
         ui->actionDisconnect->setEnabled(true);
         ui->statusBar->showMessage("connect");
     }
+
+    tabWidget->setTabIcon(tabWidget->currentIndex(), *connectStateIcon);
 }
 
 void MainWindow::onActionDisconnect() {
@@ -120,6 +127,8 @@ void MainWindow::onActionDisconnect() {
         ui->actionDisconnect->setEnabled(false);
         ui->statusBar->showMessage("disconnect");
     }
+
+    tabWidget->setTabIcon(tabWidget->currentIndex(), *disconnectStateIcon);
 }
 
 void MainWindow::onActionExit() {
@@ -228,10 +237,10 @@ void MainWindow::onOpenSession(std::string session) {
         qDebug() << "unknown session type!!" << endl;
         return;
     }
-    tabWidget->addTab(terminal, session.c_str());
     terminal->connect();
+    tabWidget->addTab(terminal, *connectStateIcon, session.c_str());
     tabWidget->setCurrentWidget(terminal);
-    terminal->focusWidget();
+    terminal->setFocus();
 }
 
 BaseTerminal* MainWindow::createLocalShellSession(std::string session) {

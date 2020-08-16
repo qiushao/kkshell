@@ -60,6 +60,8 @@ private:
     NewSessionDialog *newSerialSessionDialog = nullptr;
     QTabWidget *tabWidget = nullptr;
     BaseTerminal *currentTab = nullptr;
+    QIcon *connectStateIcon = nullptr;
+    QIcon *disconnectStateIcon = nullptr;
 
     bool showToolsBar = true;
     bool showButtonBar = true;
