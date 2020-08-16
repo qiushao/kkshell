@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>kkshell</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../resources.qrc">
+    <normaloff>:/images/application.png</normaloff>:/images/application.png</iconset>
+  </property>
   <widget class="QWidget" name="centralwidget"/>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

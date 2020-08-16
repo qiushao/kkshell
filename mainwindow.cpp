@@ -17,7 +17,6 @@ MainWindow::MainWindow(QWidget *parent)
     , sessionManager(new SessionManager)
 {
     ui->setupUi(this);
-    setWindowIcon(QIcon(":/images/application.png"));
     setWindowState(Qt::WindowMaximized);
     tabWidget = new QTabWidget(this);
     tabWidget->setTabsClosable(true);
