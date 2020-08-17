@@ -51,6 +51,9 @@ private:
 
 private slots:
     void receiveCommand(const QString &command);
+    void onEditCommandButton(const QString &commandName, const QString &command);
+    void onDeleteCommandButton(const QString &commandName);
+
     void onOpenSession(std::string session);
     void onRequestDisconnect(BaseTerminal *terminal);
 
@@ -73,5 +76,14 @@ private:
     QComboBox *commandBarGroup = nullptr;
     QWidget *commandBarLayoutWidget = nullptr;
     QHBoxLayout *commandButtonLayout = nullptr;
+
+    QDialog *newCommandGroupDialog = nullptr;
+    QDialog *editCommandGroupDialog = nullptr;
+    QDialog *newCommandButtonDialog = nullptr;
+    QDialog *editCommandButtonDialog = nullptr;
+    void onActionNewCommandGroup();
+    void onActionEditCommandGroup();
+    void onActionDeleteCommandGroup();
+    void onActionNewCommandButton();
 };
 #endif // MAINWINDOW_H

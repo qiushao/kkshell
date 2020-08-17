@@ -4,6 +4,7 @@
 
 #include "command_button.h"
 #include <QMenu>
+#include <QDebug>
 
 CommandButton::CommandButton(const QString &title, const QString &command, QWidget *parent) : QPushButton(title, parent) {
     title_ = title;
@@ -12,7 +13,9 @@ CommandButton::CommandButton(const QString &title, const QString &command, QWidg
 }
 
 CommandButton::~CommandButton() {
-
+    delete commandButtonMenu_;
+    delete actionEditCommand_;
+    delete actionDeleteCommand_;
 }
 
 void CommandButton::onClicked() {
@@ -20,11 +23,28 @@ void CommandButton::onClicked() {
 }
 
 void CommandButton::contextMenuEvent(QContextMenuEvent *) {
-    QCursor cur=this->cursor();
-    QMenu *menu=new QMenu(this);
-    QAction *editAction = new QAction(tr("编辑"));
-    QAction *delAction = new QAction(tr("删除"));
-    menu->addAction(editAction);
-    menu->addAction(delAction);
-    menu->exec(cur.pos());
+    if (commandButtonMenu_ == nullptr) {
+        initMenu();
+    }
+    commandButtonMenu_->exec(QCursor::pos());
+}
+
+void CommandButton::initMenu() {
+    commandButtonMenu_ = new QMenu(this);
+    actionEditCommand_ = new QAction(tr("edit command"));
+    actionDeleteCommand_ = new QAction(tr("delete command"));
+    commandButtonMenu_->addAction(actionEditCommand_);
+    commandButtonMenu_->addAction(actionDeleteCommand_);
+    QObject::connect(actionEditCommand_, &QAction::triggered, this, &CommandButton::onActionEditCommand);
+    QObject::connect(actionDeleteCommand_, &QAction::triggered, this, &CommandButton::onActionDeleteCommand);
+}
+
+void CommandButton::onActionEditCommand() {
+    qDebug() << "onActionEditCommand" << endl;
+    emit requestEditCommandButton(title_, command_);
+}
+
+void CommandButton::onActionDeleteCommand() {
+    qDebug() << "onActionDeleteCommand" << endl;
+    emit requestDeleteCommandButton(title_);
 }

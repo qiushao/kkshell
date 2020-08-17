@@ -19,12 +19,22 @@ public:
 
     signals:
     void sendCommand(const QString &command);
+    void requestEditCommandButton(const QString &commandName, const QString &command);
+    void requestDeleteCommandButton(const QString &commandName);
 private:
+    void initMenu();
     void onClicked();
+
+    void onActionEditCommand();
+    void onActionDeleteCommand();
 
 private:
     QString title_;
     QString command_;
+
+    QMenu *commandButtonMenu_ = nullptr;
+    QAction *actionEditCommand_ = nullptr;
+    QAction *actionDeleteCommand_ = nullptr;
 };
 
 

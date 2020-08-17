@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include <QTabWidget>
 #include <QDebug>
+#include <QMessageBox>
 #include "resources/forms/ui_mainwindow.h"
 #include "common/config/config_manager.h"
 #include "common/utils/aes_utils.h"
@@ -9,11 +10,16 @@
 #include "terminal/ssh_terminal.h"
 #include "widget/command_button.h"
 #include "widget/new_session_dialog.h"
+#include "widget/new_command_group_dialog.h"
+#include "widget/edit_command_group_dialog.h"
+#include "widget/new_command_button_dialog.h"
+#include "widget/edit_command_button_dialog.h"
 
 MainWindow::MainWindow(QWidget *parent)
         : QMainWindow(parent), ui(new Ui::MainWindow), settingDialog(new Settings), sessionManager(new SessionManager) {
     ui->setupUi(this);
     setWindowState(Qt::WindowMaximized);
+    setContextMenuPolicy(Qt::NoContextMenu);
     tabWidget = new QTabWidget(this);
     tabWidget->setTabsClosable(true);
     tabWidget->setMovable(true);
@@ -194,6 +200,11 @@ void MainWindow::actionInit() {
     QObject::connect(ui->actionShowToolsBar, &QAction::triggered, this, &MainWindow::onActionShowToolsBar);
     QObject::connect(ui->actionShowButtonBar, &QAction::triggered, this, &MainWindow::onActionShowButtonBar);
     QObject::connect(ui->actionShowStatusBar, &QAction::triggered, this, &MainWindow::onActionShowStatusBar);
+
+    QObject::connect(ui->actionNewCommandGroup, &QAction::triggered, this, &MainWindow::onActionNewCommandGroup);
+    QObject::connect(ui->actionEditCommandGroup, &QAction::triggered, this, &MainWindow::onActionEditCommandGroup);
+    QObject::connect(ui->actionDeleteCommandGroup, &QAction::triggered, this, &MainWindow::onActionDeleteCommandGroup);
+    QObject::connect(ui->actionNewCommandButton, &QAction::triggered, this, &MainWindow::onActionNewCommandButton);
 }
 
 void MainWindow::loadCommandBar(const std::string &commandBar) {
@@ -210,11 +221,12 @@ void MainWindow::loadCommandBar(const std::string &commandBar) {
     const char *sectionName = commandBar.c_str();
     std::vector<std::string> keys = conf->getSectionKeys(sectionName);
     for (const std::string &key : keys) {
-        std::string title = key.substr(3);
         const char *value = conf->getCString(sectionName, key.c_str());
         qDebug() << key.c_str() << ":" << value << endl;
-        CommandButton *button = new CommandButton(title.c_str(), value, ui->commandButtonBar);
+        CommandButton *button = new CommandButton(key.c_str(), value, ui->commandButtonBar);
         QObject::connect(button, &CommandButton::sendCommand, this, &MainWindow::receiveCommand);
+        QObject::connect(button, &CommandButton::requestEditCommandButton, this, &MainWindow::onEditCommandButton);
+        QObject::connect(button, &CommandButton::requestDeleteCommandButton, this, &MainWindow::onDeleteCommandButton);
         commandButtonLayout->addWidget(button);
     }
 }
@@ -341,4 +353,78 @@ void MainWindow::onRequestDisconnect(BaseTerminal *terminal) {
         terminal->disconnect();
         tabWidget->setTabIcon(index, *disconnectStateIcon);
     }
+}
+
+void MainWindow::onActionNewCommandGroup() {
+    qDebug() << "onActionNewCommandGroup" << endl;
+    if (newCommandGroupDialog == nullptr) {
+        newCommandGroupDialog = new NewCommandGroupDialog(this);
+    }
+    newCommandGroupDialog->show();
+}
+
+void MainWindow::onActionEditCommandGroup() {
+    qDebug() << "onActionEditCommandGroup" << endl;
+    std::string groupName = commandBarGroup->currentText().toStdString();
+    if (editCommandGroupDialog == nullptr) {
+        editCommandGroupDialog = new EditCommandGroupDialog(groupName, this);
+    }
+    editCommandGroupDialog->show();
+}
+
+void MainWindow::onActionDeleteCommandGroup() {
+    qDebug() << "onActionDeleteCommandGroup" << endl;
+    std::string groupName = commandBarGroup->currentText().toStdString();
+    QMessageBox msgBox;
+    msgBox.setMinimumSize(640, 480);
+    msgBox.setText("warning:");
+    msgBox.setInformativeText(("are you sure to delete command group: " + groupName + " ?").c_str());
+    msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+    msgBox.setDefaultButton(QMessageBox::Ok);
+    int ret = msgBox.exec();
+    if(ret == QMessageBox::Ok) {
+        ConfigManager *conf = ConfigManager::getInstance();
+        conf->deleteSection(groupName.c_str());
+        conf->deleteKey("command-bars", groupName.c_str());
+    }
+
+    commandBarGroup->removeItem(commandBarGroup->currentIndex());
+}
+
+void MainWindow::onActionNewCommandButton() {
+    qDebug() << "onActionNewCommandButton" << endl;
+    std::string groupName = commandBarGroup->currentText().toStdString();
+    if (newCommandButtonDialog == nullptr) {
+        newCommandButtonDialog = new NewCommandButtonDialog(groupName, this);
+    }
+    newCommandButtonDialog->show();
+    loadCommandBar(groupName);
+}
+
+void MainWindow::onDeleteCommandButton(const QString &commandName) {
+    qDebug() << "onDeleteCommandButton" << endl;
+    std::string groupName = commandBarGroup->currentText().toStdString();
+    QMessageBox msgBox;
+    msgBox.setMinimumSize(640, 480);
+    msgBox.setText("warning:");
+    msgBox.setInformativeText(("are you sure to delete command button: " + commandName.toStdString() + " ?").c_str());
+    msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+    msgBox.setDefaultButton(QMessageBox::Ok);
+    int ret = msgBox.exec();
+    if(ret == QMessageBox::Ok) {
+        ConfigManager *conf = ConfigManager::getInstance();
+        conf->deleteKey(groupName.c_str(), commandName.toStdString().c_str());
+    }
+
+    loadCommandBar(groupName);
+}
+
+void MainWindow::onEditCommandButton(const QString &commandName, const QString &command) {
+    std::string groupName = commandBarGroup->currentText().toStdString();
+    if (editCommandButtonDialog == nullptr) {
+        editCommandButtonDialog = new EditCommandButtonDialog(groupName, commandName.toStdString(), command.toStdString(), this);
+    }
+    editCommandButtonDialog->show();
+
+    loadCommandBar(groupName);
 }

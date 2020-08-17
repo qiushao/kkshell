@@ -45,11 +45,23 @@
      <addaction name="actionNewSSHSession"/>
      <addaction name="actionNewLocalShellSession"/>
     </widget>
+    <widget class="QMenu" name="menucommand_group">
+     <property name="title">
+      <string>command group</string>
+     </property>
+     <addaction name="actionNewCommandGroup"/>
+     <addaction name="actionEditCommandGroup"/>
+     <addaction name="actionDeleteCommandGroup"/>
+     <addaction name="separator"/>
+     <addaction name="actionNewCommandButton"/>
+    </widget>
     <addaction name="menunew"/>
     <addaction name="actionOpenSession"/>
     <addaction name="separator"/>
     <addaction name="actionConnect"/>
     <addaction name="actionDisconnect"/>
+    <addaction name="separator"/>
+    <addaction name="menucommand_group"/>
     <addaction name="separator"/>
     <addaction name="actionSettings"/>
     <addaction name="actionExit"/>
@@ -281,6 +293,29 @@
    </property>
    <property name="text">
     <string>status bar</string>
+   </property>
+  </action>
+  <action name="actionNewCommandGroup">
+   <property name="text">
+    <string>new command group</string>
+   </property>
+  </action>
+  <action name="actionEditCommandGroup">
+   <property name="text">
+    <string>edit command group</string>
+   </property>
+  </action>
+  <action name="actionDeleteCommandGroup">
+   <property name="text">
+    <string>delete command group</string>
+   </property>
+  </action>
+  <action name="actionNewCommandButton">
+   <property name="text">
+    <string>new command button</string>
+   </property>
+   <property name="toolTip">
+    <string>new command button</string>
    </property>
   </action>
  </widget>
