@@ -11,11 +11,7 @@
 #include "widget/new_session_dialog.h"
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
-    , settingDialog(new Settings)
-    , sessionManager(new SessionManager)
-{
+        : QMainWindow(parent), ui(new Ui::MainWindow), settingDialog(new Settings), sessionManager(new SessionManager) {
     ui->setupUi(this);
     setWindowState(Qt::WindowMaximized);
     tabWidget = new QTabWidget(this);
@@ -36,8 +32,7 @@ MainWindow::MainWindow(QWidget *parent)
     buttonBarInit();
 }
 
-MainWindow::~MainWindow()
-{
+MainWindow::~MainWindow() {
     delete ui;
     delete tabWidget;
     delete settingDialog;
@@ -51,7 +46,7 @@ void MainWindow::onTabChanged(int index) {
         return;
     }
     currentTab = dynamic_cast<BaseTerminal *>(tabWidget->widget(index));
-    if(currentTab->isConnect()) {
+    if (currentTab->isConnect()) {
         ui->actionConnect->setEnabled(false);
         ui->actionDisconnect->setEnabled(true);
         ui->statusBar->showMessage("connect");
@@ -182,7 +177,8 @@ void MainWindow::onActionShowStatusBar() {
 void MainWindow::actionInit() {
     QObject::connect(ui->actionSettings, &QAction::triggered, this, &MainWindow::onActionSetting);
     QObject::connect(ui->actionOpenSession, &QAction::triggered, this, &MainWindow::onActionOpenSession);
-    QObject::connect(ui->actionNewLocalShellSession, &QAction::triggered, this, &MainWindow::onActionNewLocalShellSession);
+    QObject::connect(ui->actionNewLocalShellSession, &QAction::triggered, this,
+                     &MainWindow::onActionNewLocalShellSession);
     QObject::connect(ui->actionNewSSHSession, &QAction::triggered, this, &MainWindow::onActionNewSSHSession);
     QObject::connect(ui->actionNewSerialSession, &QAction::triggered, this, &MainWindow::onActionNewSerialSession);
     QObject::connect(ui->actionExit, &QAction::triggered, this, &MainWindow::onActionExit);
@@ -200,18 +196,50 @@ void MainWindow::actionInit() {
     QObject::connect(ui->actionShowStatusBar, &QAction::triggered, this, &MainWindow::onActionShowStatusBar);
 }
 
-void MainWindow::buttonBarInit() {
+void MainWindow::loadCommandBar(const std::string &commandBar) {
     ConfigManager *conf = ConfigManager::getInstance();
-    const char *sectionName = "button_bar";
+
+    QLayoutItem *child;
+    while ((child = commandButtonLayout->takeAt(0)) != 0) {
+        if (child->widget()) {
+            child->widget()->setParent(nullptr);
+        }
+        delete child;
+    }
+
+    const char *sectionName = commandBar.c_str();
     std::vector<std::string> keys = conf->getSectionKeys(sectionName);
-    for (std::string key : keys) {
+    for (const std::string &key : keys) {
         std::string title = key.substr(3);
         const char *value = conf->getCString(sectionName, key.c_str());
         qDebug() << key.c_str() << ":" << value << endl;
         CommandButton *button = new CommandButton(title.c_str(), value, ui->commandButtonBar);
-        connect(button, &CommandButton::sendCommand, this, &MainWindow::receiveCommand);
-        ui->commandButtonBar->addWidget(button);
+        QObject::connect(button, &CommandButton::sendCommand, this, &MainWindow::receiveCommand);
+        commandButtonLayout->addWidget(button);
     }
+}
+
+void MainWindow::onCommandBarChanged(const QString &commandBar) {
+    loadCommandBar(commandBar.toStdString());
+}
+
+void MainWindow::buttonBarInit() {
+    ConfigManager *conf = ConfigManager::getInstance();
+
+    commandBarGroup = new QComboBox();
+    commandButtonLayout = new QHBoxLayout();
+    commandBarLayoutWidget = new QWidget();
+    commandBarLayoutWidget->setLayout(commandButtonLayout);
+    ui->commandButtonBar->addWidget(commandBarGroup);
+    ui->commandButtonBar->addWidget(commandBarLayoutWidget);
+    std::vector<std::string> bars = conf->getSectionKeys("command-bars");
+    for (const std::string &bar : bars) {
+        commandBarGroup->addItem(bar.c_str());
+    }
+
+    QObject::connect(commandBarGroup, &QComboBox::currentTextChanged, this, &MainWindow::onCommandBarChanged);
+
+    loadCommandBar(bars[0]);
 }
 
 void MainWindow::receiveCommand(const QString &command) {
@@ -245,12 +273,12 @@ void MainWindow::onOpenSession(std::string session) {
     terminal->setFocus();
 }
 
-BaseTerminal* MainWindow::createLocalShellSession(std::string session) {
+BaseTerminal *MainWindow::createLocalShellSession(std::string session) {
     LocalTerminal *terminal = new LocalTerminal(this);
     return terminal;
 }
 
-BaseTerminal* MainWindow::createSerialSession(std::string session) {
+BaseTerminal *MainWindow::createSerialSession(std::string session) {
     ConfigManager *conf = ConfigManager::getInstance();
     SerialSettings settings;
     settings.name = conf->getString(session.c_str(), "dev").c_str();
@@ -264,7 +292,7 @@ BaseTerminal* MainWindow::createSerialSession(std::string session) {
     return terminal;
 }
 
-BaseTerminal* MainWindow::createSSHSession(std::string session) {
+BaseTerminal *MainWindow::createSSHSession(std::string session) {
     ConfigManager *conf = ConfigManager::getInstance();
     SSHSettings sshSettings;
     sshSettings.host = conf->getString(session.c_str(), "host");
@@ -281,7 +309,8 @@ BaseTerminal* MainWindow::createSSHSession(std::string session) {
 void MainWindow::onActionNewSerialSession() {
     if (newSerialSessionDialog == nullptr) {
         newSerialSessionDialog = new NewSessionDialog("serial", this);
-        QObject::connect(newSerialSessionDialog, &NewSessionDialog::sessionListUpdate, sessionManager, &SessionManager::updateSessionList);
+        QObject::connect(newSerialSessionDialog, &NewSessionDialog::sessionListUpdate, sessionManager,
+                         &SessionManager::updateSessionList);
     }
     newSerialSessionDialog->show();
 }
@@ -289,7 +318,8 @@ void MainWindow::onActionNewSerialSession() {
 void MainWindow::onActionNewSSHSession() {
     if (newSSHSessionDialog == nullptr) {
         newSSHSessionDialog = new NewSessionDialog("ssh", this);
-        QObject::connect(newSSHSessionDialog, &NewSessionDialog::sessionListUpdate, sessionManager, &SessionManager::updateSessionList);
+        QObject::connect(newSSHSessionDialog, &NewSessionDialog::sessionListUpdate, sessionManager,
+                         &SessionManager::updateSessionList);
     }
     newSSHSessionDialog->show();
 }
@@ -297,7 +327,8 @@ void MainWindow::onActionNewSSHSession() {
 void MainWindow::onActionNewLocalShellSession() {
     if (newLocalShellSessionDialog == nullptr) {
         newLocalShellSessionDialog = new NewSessionDialog("local", this);
-        QObject::connect(newLocalShellSessionDialog, &NewSessionDialog::sessionListUpdate, sessionManager, &SessionManager::updateSessionList);
+        QObject::connect(newLocalShellSessionDialog, &NewSessionDialog::sessionListUpdate, sessionManager,
+                         &SessionManager::updateSessionList);
     }
     newLocalShellSessionDialog->show();
 }
@@ -311,7 +342,3 @@ void MainWindow::onRequestDisconnect(BaseTerminal *terminal) {
         tabWidget->setTabIcon(index, *disconnectStateIcon);
     }
 }
-
-
-
-

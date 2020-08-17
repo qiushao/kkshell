@@ -42,6 +42,8 @@ public:
 private:
     void actionInit();
     void buttonBarInit();
+    void loadCommandBar(const std::string &commandBar);
+    void onCommandBarChanged(const QString &commandBar);
 
     BaseTerminal* createLocalShellSession(std::string session);
     BaseTerminal* createSerialSession(std::string session);
@@ -67,5 +69,9 @@ private:
     bool showToolsBar = true;
     bool showButtonBar = true;
     bool showStatusBar = true;
+
+    QComboBox *commandBarGroup = nullptr;
+    QWidget *commandBarLayoutWidget = nullptr;
+    QHBoxLayout *commandButtonLayout = nullptr;
 };
 #endif // MAINWINDOW_H
