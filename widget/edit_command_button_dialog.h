@@ -9,9 +9,10 @@
 
 class EditCommandButtonDialog : public NewCommandButtonDialog {
 public:
-    EditCommandButtonDialog(std::string groupName, std::string commandName, std::string command, QWidget *parent);
+    EditCommandButtonDialog(QWidget *parent);
     ~EditCommandButtonDialog() override;
 
+    void reset(const std::string &groupName, const std::string &commandName, const std::string &command);
 };
 
 

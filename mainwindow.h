@@ -6,6 +6,8 @@
 #include "settings.h"
 #include "session_manager.h"
 #include "widget/new_session_dialog.h"
+#include "widget/new_command_button_dialog.h"
+#include "widget/edit_command_button_dialog.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -79,8 +81,8 @@ private:
 
     QDialog *newCommandGroupDialog = nullptr;
     QDialog *editCommandGroupDialog = nullptr;
-    QDialog *newCommandButtonDialog = nullptr;
-    QDialog *editCommandButtonDialog = nullptr;
+    NewCommandButtonDialog *newCommandButtonDialog = nullptr;
+    EditCommandButtonDialog *editCommandButtonDialog = nullptr;
     void onActionNewCommandGroup();
     void onActionEditCommandGroup();
     void onActionDeleteCommandGroup();

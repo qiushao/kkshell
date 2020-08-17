@@ -395,10 +395,10 @@ void MainWindow::onActionNewCommandButton() {
     qDebug() << "onActionNewCommandButton" << endl;
     std::string groupName = commandBarGroup->currentText().toStdString();
     if (newCommandButtonDialog == nullptr) {
-        newCommandButtonDialog = new NewCommandButtonDialog(groupName, this);
+        newCommandButtonDialog = new NewCommandButtonDialog(this);
     }
+    newCommandButtonDialog->reset(groupName);
     newCommandButtonDialog->show();
-    loadCommandBar(groupName);
 }
 
 void MainWindow::onDeleteCommandButton(const QString &commandName) {
@@ -422,9 +422,9 @@ void MainWindow::onDeleteCommandButton(const QString &commandName) {
 void MainWindow::onEditCommandButton(const QString &commandName, const QString &command) {
     std::string groupName = commandBarGroup->currentText().toStdString();
     if (editCommandButtonDialog == nullptr) {
-        editCommandButtonDialog = new EditCommandButtonDialog(groupName, commandName.toStdString(), command.toStdString(), this);
+        editCommandButtonDialog = new EditCommandButtonDialog(this);
+        QObject::connect(editCommandButtonDialog, &NewCommandButtonDialog::commandButtonChanged, this, &MainWindow::onCommandBarChanged);
     }
+    editCommandButtonDialog->reset(groupName, commandName.toStdString(), command.toStdString());
     editCommandButtonDialog->show();
-
-    loadCommandBar(groupName);
 }

@@ -5,10 +5,11 @@
 #include "new_command_button_dialog.h"
 #include "common/config/config_manager.h"
 
-NewCommandButtonDialog::NewCommandButtonDialog(std::string groupName, QWidget *parent)
-        : QDialog(parent), groupName_(groupName) {
+NewCommandButtonDialog::NewCommandButtonDialog(QWidget *parent)
+        : QDialog(parent) {
     mainLayout = new QVBoxLayout();
     setLayout(mainLayout);
+    setModal(true);
 
     titleLayout = new QHBoxLayout();
     titleLabel = new QLabel(tr("title:"));
@@ -48,8 +49,15 @@ void NewCommandButtonDialog::onApply() {
         conf->deleteKey(groupName_.c_str(), oldCommandName.c_str());
     }
     hide();
+    emit commandButtonChanged(groupName_.c_str());
 }
 
 void NewCommandButtonDialog::onCancel() {
     hide();
+}
+
+void NewCommandButtonDialog::reset(const std::string &groupName) {
+    groupName_ = groupName;
+    titleEdit->setText("");
+    commandEdit->setText("");
 }

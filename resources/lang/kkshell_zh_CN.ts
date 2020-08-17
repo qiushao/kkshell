@@ -232,22 +232,22 @@
 <context>
     <name>NewCommandButtonDialog</name>
     <message>
-        <location filename="../../widget/new_command_button_dialog.cpp" line="14"/>
+        <location filename="../../widget/new_command_button_dialog.cpp" line="15"/>
         <source>title:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widget/new_command_button_dialog.cpp" line="21"/>
+        <location filename="../../widget/new_command_button_dialog.cpp" line="22"/>
         <source>command:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widget/new_command_button_dialog.cpp" line="28"/>
+        <location filename="../../widget/new_command_button_dialog.cpp" line="29"/>
         <source>apply</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widget/new_command_button_dialog.cpp" line="29"/>
+        <location filename="../../widget/new_command_button_dialog.cpp" line="30"/>
         <source>cancel</source>
         <translation type="unfinished"></translation>
     </message>

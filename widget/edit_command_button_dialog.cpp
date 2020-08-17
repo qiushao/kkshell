@@ -4,14 +4,18 @@
 
 #include "edit_command_button_dialog.h"
 
-EditCommandButtonDialog::EditCommandButtonDialog(std::string groupName, std::string commandName, std::string command, QWidget *parent)
-: NewCommandButtonDialog(groupName, parent){
+EditCommandButtonDialog::EditCommandButtonDialog(QWidget *parent)
+: NewCommandButtonDialog(parent){
     isEdit = true;
-    oldCommandName = commandName;
-    titleEdit->setText(oldCommandName.c_str());
-    commandEdit->setText(command.c_str());
 }
 
 EditCommandButtonDialog::~EditCommandButtonDialog() {
 
+}
+
+void EditCommandButtonDialog::reset(const std::string &groupName, const std::string &commandName, const std::string &command) {
+    groupName_ = groupName;
+    oldCommandName = commandName;
+    titleEdit->setText(oldCommandName.c_str());
+    commandEdit->setText(command.c_str());
 }

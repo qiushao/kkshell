@@ -12,12 +12,21 @@
 #include <QPushButton>
 
 class NewCommandButtonDialog : public QDialog {
+
+Q_OBJECT
+
 public:
-    explicit NewCommandButtonDialog(std::string groupName, QWidget *parent);
+    explicit NewCommandButtonDialog(QWidget *parent);
     ~NewCommandButtonDialog() override;
+
+    void reset(const std::string &groupName);
+
+    signals:
+    void commandButtonChanged(const QString &groupName);
+
 protected:
-    std::string groupName_;
     bool isEdit = false;
+    std::string groupName_ = "";
     std::string oldCommandName = "";
 
     void onApply();
