@@ -6,7 +6,7 @@
 #include "settings.h"
 #include "session_manager.h"
 #include "widget/new_session_dialog.h"
-#include "widget/new_command_button_dialog.h"
+#include "widget/edit_command_group_dialog.h"
 #include "widget/edit_command_button_dialog.h"
 
 QT_BEGIN_NAMESPACE
@@ -78,10 +78,7 @@ private:
     QComboBox *commandBarGroup = nullptr;
     QWidget *commandBarLayoutWidget = nullptr;
     QHBoxLayout *commandButtonLayout = nullptr;
-
-    QDialog *newCommandGroupDialog = nullptr;
-    QDialog *editCommandGroupDialog = nullptr;
-    NewCommandButtonDialog *newCommandButtonDialog = nullptr;
+    EditCommandGroupDialog *editCommandGroupDialog = nullptr;
     EditCommandButtonDialog *editCommandButtonDialog = nullptr;
     void onActionNewCommandGroup();
     void onActionEditCommandGroup();

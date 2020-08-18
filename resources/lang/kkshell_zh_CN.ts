@@ -15,6 +15,47 @@
     </message>
 </context>
 <context>
+    <name>EditCommandButtonDialog</name>
+    <message>
+        <location filename="../../widget/edit_command_button_dialog.cpp" line="15"/>
+        <source>title:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../widget/edit_command_button_dialog.cpp" line="22"/>
+        <source>command:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../widget/edit_command_button_dialog.cpp" line="29"/>
+        <source>apply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../widget/edit_command_button_dialog.cpp" line="30"/>
+        <source>cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>EditCommandGroupDialog</name>
+    <message>
+        <location filename="../../widget/edit_command_group_dialog.cpp" line="13"/>
+        <source>command group name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../widget/edit_command_group_dialog.cpp" line="20"/>
+        <source>apply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../widget/edit_command_group_dialog.cpp" line="21"/>
+        <source>cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <location filename="../forms/mainwindow.ui" line="38"/>
@@ -226,47 +267,6 @@
         <location filename="../forms/mainwindow.ui" line="310"/>
         <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="268"/>
         <source>delete command group</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>NewCommandButtonDialog</name>
-    <message>
-        <location filename="../../widget/new_command_button_dialog.cpp" line="15"/>
-        <source>title:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../widget/new_command_button_dialog.cpp" line="22"/>
-        <source>command:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../widget/new_command_button_dialog.cpp" line="29"/>
-        <source>apply</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../widget/new_command_button_dialog.cpp" line="30"/>
-        <source>cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>NewCommandGroupDialog</name>
-    <message>
-        <location filename="../../widget/new_command_group_dialog.cpp" line="13"/>
-        <source>command group name:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../widget/new_command_group_dialog.cpp" line="20"/>
-        <source>apply</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../widget/new_command_group_dialog.cpp" line="21"/>
-        <source>cancel</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -10,13 +10,14 @@
 #include "terminal/ssh_terminal.h"
 #include "widget/command_button.h"
 #include "widget/new_session_dialog.h"
-#include "widget/new_command_group_dialog.h"
 #include "widget/edit_command_group_dialog.h"
-#include "widget/new_command_button_dialog.h"
 #include "widget/edit_command_button_dialog.h"
 
 MainWindow::MainWindow(QWidget *parent)
-        : QMainWindow(parent), ui(new Ui::MainWindow), settingDialog(new Settings), sessionManager(new SessionManager) {
+        : QMainWindow(parent), ui(new Ui::MainWindow), settingDialog(new Settings), sessionManager(new SessionManager),
+        editCommandButtonDialog(new EditCommandButtonDialog(this)),
+        editCommandGroupDialog(new EditCommandGroupDialog(this)) {
+
     ui->setupUi(this);
     setWindowState(Qt::WindowMaximized);
     setContextMenuPolicy(Qt::NoContextMenu);
@@ -33,6 +34,8 @@ MainWindow::MainWindow(QWidget *parent)
     QObject::connect(tabWidget, &QTabWidget::currentChanged, this, &MainWindow::onTabChanged);
     QObject::connect(tabWidget, &QTabWidget::tabCloseRequested, this, &MainWindow::onTabCloseRequested);
     QObject::connect(sessionManager, &SessionManager::openSession, this, &MainWindow::onOpenSession);
+    QObject::connect(editCommandButtonDialog, &EditCommandButtonDialog::commandButtonChanged, this, &MainWindow::onCommandBarChanged);
+    QObject::connect(editCommandGroupDialog, &EditCommandGroupDialog::commandGroupChanged, this, &MainWindow::onCommandBarChanged);
 
     actionInit();
     buttonBarInit();
@@ -231,8 +234,9 @@ void MainWindow::loadCommandBar(const std::string &commandBar) {
     }
 }
 
-void MainWindow::onCommandBarChanged(const QString &commandBar) {
-    loadCommandBar(commandBar.toStdString());
+void MainWindow::onCommandBarChanged(const QString &groupName) {
+    commandBarGroup->setCurrentText(groupName);
+    loadCommandBar(groupName.toStdString());
 }
 
 void MainWindow::buttonBarInit() {
@@ -357,18 +361,15 @@ void MainWindow::onRequestDisconnect(BaseTerminal *terminal) {
 
 void MainWindow::onActionNewCommandGroup() {
     qDebug() << "onActionNewCommandGroup" << endl;
-    if (newCommandGroupDialog == nullptr) {
-        newCommandGroupDialog = new NewCommandGroupDialog(this);
-    }
-    newCommandGroupDialog->show();
+    editCommandGroupDialog->clearField();
+    editCommandGroupDialog->show();
 }
 
 void MainWindow::onActionEditCommandGroup() {
     qDebug() << "onActionEditCommandGroup" << endl;
     std::string groupName = commandBarGroup->currentText().toStdString();
-    if (editCommandGroupDialog == nullptr) {
-        editCommandGroupDialog = new EditCommandGroupDialog(groupName, this);
-    }
+    editCommandGroupDialog->clearField();
+    editCommandGroupDialog->setField(groupName);
     editCommandGroupDialog->show();
 }
 
@@ -394,11 +395,16 @@ void MainWindow::onActionDeleteCommandGroup() {
 void MainWindow::onActionNewCommandButton() {
     qDebug() << "onActionNewCommandButton" << endl;
     std::string groupName = commandBarGroup->currentText().toStdString();
-    if (newCommandButtonDialog == nullptr) {
-        newCommandButtonDialog = new NewCommandButtonDialog(this);
-    }
-    newCommandButtonDialog->reset(groupName);
-    newCommandButtonDialog->show();
+    editCommandButtonDialog->clearField();
+    editCommandButtonDialog->setField(groupName, "", "");
+    editCommandButtonDialog->show();
+}
+
+void MainWindow::onEditCommandButton(const QString &commandName, const QString &command) {
+    std::string groupName = commandBarGroup->currentText().toStdString();
+    editCommandButtonDialog->clearField();
+    editCommandButtonDialog->setField(groupName, commandName.toStdString(), command.toStdString());
+    editCommandButtonDialog->show();
 }
 
 void MainWindow::onDeleteCommandButton(const QString &commandName) {
@@ -419,12 +425,3 @@ void MainWindow::onDeleteCommandButton(const QString &commandName) {
     loadCommandBar(groupName);
 }
 
-void MainWindow::onEditCommandButton(const QString &commandName, const QString &command) {
-    std::string groupName = commandBarGroup->currentText().toStdString();
-    if (editCommandButtonDialog == nullptr) {
-        editCommandButtonDialog = new EditCommandButtonDialog(this);
-        QObject::connect(editCommandButtonDialog, &NewCommandButtonDialog::commandButtonChanged, this, &MainWindow::onCommandBarChanged);
-    }
-    editCommandButtonDialog->reset(groupName, commandName.toStdString(), command.toStdString());
-    editCommandButtonDialog->show();
-}
