@@ -24,6 +24,7 @@ public:
 
 signals:
     void commandGroupChanged(const QString &groupName);
+    void commandGroupAdd(const QString &groupName);
 
 protected:
     bool isEdit = false;

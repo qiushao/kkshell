@@ -34,8 +34,9 @@ MainWindow::MainWindow(QWidget *parent)
     QObject::connect(tabWidget, &QTabWidget::currentChanged, this, &MainWindow::onTabChanged);
     QObject::connect(tabWidget, &QTabWidget::tabCloseRequested, this, &MainWindow::onTabCloseRequested);
     QObject::connect(sessionManager, &SessionManager::openSession, this, &MainWindow::onOpenSession);
-    QObject::connect(editCommandButtonDialog, &EditCommandButtonDialog::commandButtonChanged, this, &MainWindow::onCommandBarChanged);
-    QObject::connect(editCommandGroupDialog, &EditCommandGroupDialog::commandGroupChanged, this, &MainWindow::onCommandBarChanged);
+    QObject::connect(editCommandButtonDialog, &EditCommandButtonDialog::commandButtonChanged, this, &MainWindow::loadCommandBar);
+    QObject::connect(editCommandGroupDialog, &EditCommandGroupDialog::commandGroupChanged, this, &MainWindow::onCommandGroupChanged);
+    QObject::connect(editCommandGroupDialog, &EditCommandGroupDialog::commandGroupAdd, this, &MainWindow::onCommandGroupAdd);
 
     actionInit();
     buttonBarInit();
@@ -210,7 +211,7 @@ void MainWindow::actionInit() {
     QObject::connect(ui->actionNewCommandButton, &QAction::triggered, this, &MainWindow::onActionNewCommandButton);
 }
 
-void MainWindow::loadCommandBar(const std::string &commandBar) {
+void MainWindow::loadCommandBar(const QString &groupName) {
     ConfigManager *conf = ConfigManager::getInstance();
 
     QLayoutItem *child;
@@ -221,7 +222,7 @@ void MainWindow::loadCommandBar(const std::string &commandBar) {
         delete child;
     }
 
-    const char *sectionName = commandBar.c_str();
+    const char *sectionName = groupName.toStdString().c_str();
     std::vector<std::string> keys = conf->getSectionKeys(sectionName);
     for (const std::string &key : keys) {
         const char *value = conf->getCString(sectionName, key.c_str());
@@ -234,9 +235,15 @@ void MainWindow::loadCommandBar(const std::string &commandBar) {
     }
 }
 
-void MainWindow::onCommandBarChanged(const QString &groupName) {
+void MainWindow::onCommandGroupChanged(const QString &groupName) {
+    qDebug() << "onCommandGroupChanged" << endl;
+    commandBarGroup->setItemText(commandBarGroup->currentIndex(), groupName);
+}
+
+void MainWindow::onCommandGroupAdd(const QString &groupName) {
+    commandBarGroup->addItem(groupName);
+    qDebug() << "onCommandGroupAdd" << endl;
     commandBarGroup->setCurrentText(groupName);
-    loadCommandBar(groupName.toStdString());
 }
 
 void MainWindow::buttonBarInit() {
@@ -253,9 +260,9 @@ void MainWindow::buttonBarInit() {
         commandBarGroup->addItem(bar.c_str());
     }
 
-    QObject::connect(commandBarGroup, &QComboBox::currentTextChanged, this, &MainWindow::onCommandBarChanged);
+    QObject::connect(commandBarGroup, &QComboBox::currentTextChanged, this, &MainWindow::loadCommandBar);
 
-    loadCommandBar(bars[0]);
+    loadCommandBar(bars[0].c_str());
 }
 
 void MainWindow::receiveCommand(const QString &command) {
@@ -422,6 +429,6 @@ void MainWindow::onDeleteCommandButton(const QString &commandName) {
         conf->deleteKey(groupName.c_str(), commandName.toStdString().c_str());
     }
 
-    loadCommandBar(groupName);
+    loadCommandBar(groupName.c_str());
 }
 

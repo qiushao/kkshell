@@ -44,8 +44,9 @@ public:
 private:
     void actionInit();
     void buttonBarInit();
-    void loadCommandBar(const std::string &commandBar);
-    void onCommandBarChanged(const QString &commandBar);
+    void loadCommandBar(const QString &groupName);
+    void onCommandGroupChanged(const QString &groupName);
+    void onCommandGroupAdd(const QString &groupName);
 
     BaseTerminal* createLocalShellSession(std::string session);
     BaseTerminal* createSerialSession(std::string session);

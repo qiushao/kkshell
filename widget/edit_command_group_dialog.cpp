@@ -44,10 +44,11 @@ void EditCommandGroupDialog::onApply() {
                 conf->setCString(groupName.c_str(), key.c_str(), value.c_str());
             }
             conf->deleteSection(oldGroupName.c_str());
+            emit commandGroupChanged(groupName.c_str());
         }
     } else {
         conf->setCString("command-bars", groupName.c_str(), "show");
-        emit commandGroupChanged(groupName.c_str());
+        emit commandGroupAdd(groupName.c_str());
     }
 
     hide();
