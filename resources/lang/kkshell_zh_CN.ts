@@ -56,6 +56,41 @@
     </message>
 </context>
 <context>
+    <name>EditSessionDialog</name>
+    <message>
+        <location filename="../../widget/edit_session_dialog.cpp" line="121"/>
+        <location filename="../../widget/edit_session_dialog.cpp" line="134"/>
+        <source>0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../widget/edit_session_dialog.cpp" line="122"/>
+        <location filename="../../widget/edit_session_dialog.cpp" line="136"/>
+        <source>2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../widget/edit_session_dialog.cpp" line="123"/>
+        <source>3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../widget/edit_session_dialog.cpp" line="124"/>
+        <source>4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../widget/edit_session_dialog.cpp" line="125"/>
+        <source>5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../widget/edit_session_dialog.cpp" line="135"/>
+        <source>1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <location filename="../forms/mainwindow.ui" line="38"/>
@@ -267,41 +302,6 @@
         <location filename="../forms/mainwindow.ui" line="310"/>
         <location filename="../../cmake-build-debug/kkshell_autogen/include/resources/forms/ui_mainwindow.h" line="268"/>
         <source>delete command group</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>NewSessionDialog</name>
-    <message>
-        <location filename="../../widget/new_session_dialog.cpp" line="121"/>
-        <location filename="../../widget/new_session_dialog.cpp" line="134"/>
-        <source>0</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../widget/new_session_dialog.cpp" line="122"/>
-        <location filename="../../widget/new_session_dialog.cpp" line="136"/>
-        <source>2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../widget/new_session_dialog.cpp" line="123"/>
-        <source>3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../widget/new_session_dialog.cpp" line="124"/>
-        <source>4</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../widget/new_session_dialog.cpp" line="125"/>
-        <source>5</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../widget/new_session_dialog.cpp" line="135"/>
-        <source>1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

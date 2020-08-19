@@ -102,7 +102,9 @@ std::string SessionManager::getSelectSessionName() {
 void SessionManager::onActionEditSession() {
     std::string sessionName = getSelectSessionName();
     std::string sessionType = ConfigManager::getInstance()->getString("sessions", sessionName.c_str(), "unknown");
-    EditSessionDialog *dialog = new EditSessionDialog(sessionName, sessionType, this);
+    EditSessionDialog *dialog = new EditSessionDialog(sessionType, this);
+    QObject::connect(dialog, &EditSessionDialog::sessionListUpdate, this, &SessionManager::updateSessionList);
+    dialog->editSession(sessionName, sessionType);
     dialog->show();
 }
 

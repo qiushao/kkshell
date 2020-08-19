@@ -5,7 +5,7 @@
 #include "terminal/base_terminal.h"
 #include "settings.h"
 #include "session_manager.h"
-#include "widget/new_session_dialog.h"
+#include "widget/edit_session_dialog.h"
 #include "widget/edit_command_group_dialog.h"
 #include "widget/edit_command_button_dialog.h"
 
@@ -64,9 +64,9 @@ private:
     Ui::MainWindow *ui = nullptr;
     Settings *settingDialog = nullptr;
     SessionManager *sessionManager = nullptr;
-    NewSessionDialog *newLocalShellSessionDialog = nullptr;
-    NewSessionDialog *newSSHSessionDialog = nullptr;
-    NewSessionDialog *newSerialSessionDialog = nullptr;
+    EditSessionDialog *newLocalShellSessionDialog = nullptr;
+    EditSessionDialog *newSSHSessionDialog = nullptr;
+    EditSessionDialog *newSerialSessionDialog = nullptr;
     QTabWidget *tabWidget = nullptr;
     BaseTerminal *currentTab = nullptr;
     QIcon *connectStateIcon = nullptr;

@@ -9,7 +9,7 @@
 #include "terminal/serial_terminal.h"
 #include "terminal/ssh_terminal.h"
 #include "widget/command_button.h"
-#include "widget/new_session_dialog.h"
+#include "widget/edit_session_dialog.h"
 #include "widget/edit_command_group_dialog.h"
 #include "widget/edit_command_button_dialog.h"
 
@@ -331,8 +331,8 @@ BaseTerminal *MainWindow::createSSHSession(std::string session) {
 
 void MainWindow::onActionNewSerialSession() {
     if (newSerialSessionDialog == nullptr) {
-        newSerialSessionDialog = new NewSessionDialog("serial", this);
-        QObject::connect(newSerialSessionDialog, &NewSessionDialog::sessionListUpdate, sessionManager,
+        newSerialSessionDialog = new EditSessionDialog("serial", this);
+        QObject::connect(newSerialSessionDialog, &EditSessionDialog::sessionListUpdate, sessionManager,
                          &SessionManager::updateSessionList);
     }
     newSerialSessionDialog->show();
@@ -340,8 +340,8 @@ void MainWindow::onActionNewSerialSession() {
 
 void MainWindow::onActionNewSSHSession() {
     if (newSSHSessionDialog == nullptr) {
-        newSSHSessionDialog = new NewSessionDialog("ssh", this);
-        QObject::connect(newSSHSessionDialog, &NewSessionDialog::sessionListUpdate, sessionManager,
+        newSSHSessionDialog = new EditSessionDialog("ssh", this);
+        QObject::connect(newSSHSessionDialog, &EditSessionDialog::sessionListUpdate, sessionManager,
                          &SessionManager::updateSessionList);
     }
     newSSHSessionDialog->show();
@@ -349,8 +349,8 @@ void MainWindow::onActionNewSSHSession() {
 
 void MainWindow::onActionNewLocalShellSession() {
     if (newLocalShellSessionDialog == nullptr) {
-        newLocalShellSessionDialog = new NewSessionDialog("local", this);
-        QObject::connect(newLocalShellSessionDialog, &NewSessionDialog::sessionListUpdate, sessionManager,
+        newLocalShellSessionDialog = new EditSessionDialog("local", this);
+        QObject::connect(newLocalShellSessionDialog, &EditSessionDialog::sessionListUpdate, sessionManager,
                          &SessionManager::updateSessionList);
     }
     newLocalShellSessionDialog->show();
