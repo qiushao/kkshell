@@ -21,7 +21,10 @@ add_subdirectory(terminal)
 set(TS_FILES resources/lang/kkshell_zh_CN.ts)
 set(FORM_FILES resources/forms/mainwindow.ui resources/forms/settings.ui resources/forms/session_manager.ui)
 set(QRC_FILES resources/resources.qrc)
-set(SRC_FILES main.cpp mainwindow.cpp widget/command_button.cpp settings.cpp session_manager.cpp widget/edit_session_dialog.cpp widget/edit_command_group_dialog.cpp widget/edit_command_button_dialog.cpp)
+set(SRC_FILES main.cpp mainwindow.cpp
+        widget/command_button.cpp settings.cpp session_manager.cpp widget/edit_session_dialog.cpp
+        widget/edit_command_group_dialog.cpp widget/edit_command_button_dialog.cpp
+        )
 
 add_executable(kkshell
         ${SRC_FILES}

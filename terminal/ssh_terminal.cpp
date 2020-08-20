@@ -106,11 +106,7 @@ void SSHTerminal::connect() {
     }
 
     // 把在终端的输入传给 ssh
-    QObject::connect(this, &QTermWidget::sendData, [this](const char *data, int size) {
-        if(connect_) {
-            libssh2_channel_write(channel_, data, size);
-        }
-    });
+    QObject::connect(this, &QTermWidget::sendData, this, &SSHTerminal::onTerminalInput);
 
     // 起个线程，循环读 ssh 返回的数据，写到终端
     sshReadThread_ = std::thread(std::mem_fn(&SSHTerminal::threadLoop), this);
@@ -122,6 +118,7 @@ void SSHTerminal::disconnect() {
     if (!connect_) {
         return;
     }
+    QObject::disconnect(this, &QTermWidget::sendData, this, &SSHTerminal::onTerminalInput);
     connect_ = false;
     sshReadThread_.join();
     if(channel_) {
@@ -166,5 +163,11 @@ void SSHTerminal::resizeEvent(QResizeEvent *event) {
     qDebug() << "size changed to " << columns_ << " x " << lines_ << endl;
     if (connect_) {
         libssh2_channel_request_pty_size(channel_, columns_, lines_);
+    }
+}
+
+void SSHTerminal::onTerminalInput(const char *data, int size) {
+    if(connect_) {
+        libssh2_channel_write(channel_, data, size);
     }
 }

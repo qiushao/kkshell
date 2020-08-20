@@ -29,6 +29,7 @@ protected:
     void resizeEvent(QResizeEvent *event) override;
 
 private:
+    void onTerminalInput(const char *data, int size);
     void threadLoop();
 
 private:
