@@ -3,171 +3,140 @@
 //
 
 #include "ssh_terminal.h"
-#include <QDebug>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
 #include <unistd.h>
+#include <QDebug>
+#include <QTime>
+#include <QCoreApplication>
+#include <QtCore/QEventLoop>
 
 SSHTerminal::SSHTerminal(const SSHSettings &settings, QWidget *parent) : BaseTerminal(parent) {
+    startShellProgram();
     settings_ = settings;
-    // Here we start an empty pty.
-    this->startTerminalTeletype();
 }
 
 SSHTerminal::~SSHTerminal() {
 }
 
 void SSHTerminal::connect() {
-    int rc, i;
-    struct sockaddr_in sin;
-    const char *fingerprint;
+    QString shellFile = createShellFile();
+    QString strTxt = "expect -f " + shellFile + "\n";
+    sendText(strTxt);
 
-    rc = libssh2_init(0);
-    if(rc != 0) {
-        fprintf(stderr, "libssh2 initialization failed (%d)\n", rc);
-        return;
+    QTime dieTime = QTime::currentTime().addMSecs(200);
+    while (QTime::currentTime() < dieTime) {
+        QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
     }
 
-    sock_ = socket(AF_INET, SOCK_STREAM, 0);
-    sin.sin_family = AF_INET;
-    sin.sin_addr.s_addr = inet_addr(settings_.host.c_str());
-    sin.sin_port = htons(22);
-    if(::connect(sock_, (struct sockaddr*)(&sin), sizeof(struct sockaddr_in)) != 0) {
-        fprintf(stderr, "failed to connect!\n");
-        return;
+    if (isInRemoteServer()) {
+        qDebug() << "connect server success";
+        connect_ = true;
+    } else {
+        qDebug() << "connect server failed!!!";
+        connect_ = false;
     }
-
-    /* Create a session instance and start it up. This will trade welcome
-     * banners, exchange keys, and setup crypto, compression, and MAC layers
-     */
-    session_ = libssh2_session_init();
-    if(libssh2_session_handshake(session_, sock_)) {
-        fprintf(stderr, "Failure establishing SSH session\n");
-        return;
-    }
-
-    /* At this point we havn't authenticated. The first thing to do is check
-     * the hostkey's fingerprint against our known hosts Your app may have it
-     * hard coded, may go to a file, may present it to the user, that's your
-     * call
-     */
-    fingerprint = libssh2_hostkey_hash(session_, LIBSSH2_HOSTKEY_HASH_SHA1);
-    fprintf(stderr, "Fingerprint: ");
-    for(i = 0; i < 20; i++) {
-        fprintf(stderr, "%02X ", (unsigned char)fingerprint[i]);
-    }
-    fprintf(stderr, "\n");
-
-    if (settings_.authType == "passwd") {
-        if(libssh2_userauth_password(session_, settings_.user.c_str(), settings_.passwd.c_str())) {
-            fprintf(stderr, "\tAuthentication by password failed!\n");
-            return;
-        } else {
-            fprintf(stderr, "\tAuthentication by password succeeded.\n");
-        }
-    } else if (settings_.authType == "ssh-key") {
-        std::string privateKey = settings_.keyFile.substr(0, settings_.keyFile.find_last_of('.'));
-        if(libssh2_userauth_publickey_fromfile(session_, settings_.user.c_str(), settings_.keyFile.c_str(), privateKey.c_str(), settings_.passwd.c_str())) {
-            fprintf(stderr, "\tAuthentication by public key failed!\n");
-            return;
-        }
-        else {
-            fprintf(stderr, "\tAuthentication by public key succeeded.\n");
-        }
-    }
-
-
-
-    /* Request a shell */
-    channel_ = libssh2_channel_open_session(session_);
-    if(!channel_) {
-        fprintf(stderr, "Unable to open a session\n");
-        return;
-    }
-
-    /* Some environment variables may be set,
-     * It's up to the server which ones it'll allow though
-     */
-    libssh2_channel_setenv(channel_, "TERM", "xterm-256color");
-
-    /* Request a terminal with 'vanilla' terminal emulation
-     * See /etc/termcap for more options
-     */
-    if(libssh2_channel_request_pty(channel_, "xterm-256color")) {
-        fprintf(stderr, "Failed requesting pty\n");
-        return;
-    }
-
-    /* Open a SHELL on that pty */
-    if(libssh2_channel_shell(channel_)) {
-        fprintf(stderr, "Unable to request shell on allocated pty\n");
-        return;
-    }
-
-    // 把在终端的输入传给 ssh
-    QObject::connect(this, &QTermWidget::sendData, this, &SSHTerminal::onTerminalInput);
-
-    // 起个线程，循环读 ssh 返回的数据，写到终端
-    sshReadThread_ = std::thread(std::mem_fn(&SSHTerminal::threadLoop), this);
-    fprintf(stderr, "connect ssh success\n");
-    connect_ = true;
 }
 
 void SSHTerminal::disconnect() {
     if (!connect_) {
         return;
     }
-    QObject::disconnect(this, &QTermWidget::sendData, this, &SSHTerminal::onTerminalInput);
     connect_ = false;
-    sshReadThread_.join();
-    if(channel_) {
-        libssh2_channel_free(channel_);
-        channel_ = NULL;
-    }
-    libssh2_session_disconnect(session_,"Normal Shutdown, Thank you for playing");
-    libssh2_session_free(session_);
-    ::close(sock_);
-    fprintf(stderr, "all done!\n");
-    libssh2_exit();
 }
 
-void SSHTerminal::threadLoop() {
-    LIBSSH2_POLLFD *fds = nullptr;
-    int nfds = 1;
-    char buffer;
-
-    fds = static_cast<LIBSSH2_POLLFD *>(malloc(sizeof(LIBSSH2_POLLFD)));
-    if (fds == nullptr) {
-        fprintf(stderr, "malloc LIBSSH2_POLLFD error\n");
-        return;
-    }
-
-    fds[0].type = LIBSSH2_POLLFD_CHANNEL;
-    fds[0].fd.channel = channel_;
-    fds[0].events = LIBSSH2_POLLFD_POLLIN;
-    fds[0].revents = LIBSSH2_POLLFD_POLLIN;
-
-    while (connect_) {
-        if (libssh2_poll(fds, nfds, 1000) > 0) {
-            libssh2_channel_read(channel_, &buffer, 1);
-            write(this->getPtySlaveFd(), &buffer, 1);
-            fflush(stdout);
-        }
-    }
+/*******************************************************************************
+ 1. @函数:    isInRemoteServer
+ 2. @作者:    ut000610 daizhengwen
+ 3. @日期:    2020-08-11
+ 4. @说明:    是否在远程服务器中
+*******************************************************************************/
+bool SSHTerminal::isInRemoteServer()
+{
+//    int pid = getForegroundPid();
+//    qDebug() << "getShellPID = " << pid << endl;
+//    if (pid <= 0) {
+//        return false;
+//    }
+//    QString pidFilepath = "/proc/" + QString::number(pid) + "/comm";
+//    QFile pidFile(pidFilepath);
+//    if (pidFile.exists()) {
+//        pidFile.open(QIODevice::ReadOnly | QIODevice::Text);
+//        QString commString(pidFile.readLine());
+//        pidFile.close();
+//        if ("expect" == commString.trimmed()) {
+//            return true;
+//        }
+//    }
+    return true;
 }
 
-void SSHTerminal::resizeEvent(QResizeEvent *event) {
-    QTermWidget::resizeEvent(event);
-    calGeometry();
-    qDebug() << "size changed to " << columns_ << " x " << lines_ << endl;
-    if (connect_) {
-        libssh2_channel_request_pty_size(channel_, columns_, lines_);
+/*******************************************************************************
+ 1. @函数:    getRandString
+ 2. @作者:    ut000439 wangpeili
+ 3. @日期:    2020-08-11
+ 4. @说明:    获取随机字符串
+*******************************************************************************/
+static QString getRandString()
+{
+    int max = 6;  //字符串长度
+    QString tmp = QString("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+    QString str;
+    QTime t;
+    t = QTime::currentTime();
+    qsrand(t.msec() + t.second() * 1000);
+    for (int i = 0; i < max; i++) {
+        int len = qrand() % tmp.length();
+        str[i] = tmp.at(len);
     }
+    return str;
 }
 
-void SSHTerminal::onTerminalInput(const char *data, int size) {
-    if(connect_) {
-        libssh2_channel_write(channel_, data, size);
+/*******************************************************************************
+ 1. @函数:    createShellFile
+ 2. @作者:    ut000610 戴正文
+ 3. @日期:    2020-07-31
+ 4. @说明:    创建连接远程的的临时shell文件
+*******************************************************************************/
+QString SSHTerminal::createShellFile()
+{
+    // 首先读取通用模板
+    QFile sourceFile(":/script/ssh_login.sh");
+    QString fileString;
+    // 打开文件
+    if (sourceFile.open(QIODevice::ReadOnly)) {
+        //读取文件
+        fileString = sourceFile.readAll();
+        // 关闭文件
+        sourceFile.close();
     }
+
+    // 用远程管理数据替换文件内的关键字
+    fileString.replace("<<USER>>", settings_.user.c_str());
+    fileString.replace("<<SERVER>>", settings_.host.c_str());
+    fileString.replace("<<PORT>>", QString::number(settings_.port));
+    // 根据是否有证书，替换关键字
+    if (settings_.authType == "passwd") {
+        fileString.replace("<<PRIVATE_KEY>>", "");
+        QRegExp rx("([\"$\\\\])");
+        QString password = settings_.passwd.c_str();
+        password.replace(rx, "\\\\\\1");
+        fileString.replace("<<PASSWORD>>", password);
+        fileString.replace("<<AUTHENTICATION>>", "no");
+    } else {
+        fileString.replace("<<PRIVATE_KEY>>", QString("-i " + QString(settings_.keyFile.c_str())));
+        fileString.replace("<<PASSWORD>>", "");
+        fileString.replace("<<AUTHENTICATION>>", "yes");
+    }
+    // 添加远程提示
+    QString remote_command = "echo " + tr("Make sure that rz and sz commands have been installed in the server before right clicking to upload and download files.") + " && ";
+    fileString.replace("<<REMOTE_COMMAND>>", remote_command);
+
+    // 创建临时文件
+    QString toFileStr = "/tmp/kkshell-" + getRandString();
+    QFile toFile(toFileStr);
+    toFile.open(QIODevice::WriteOnly | QIODevice::Text);
+    // 写文件
+    toFile.write(fileString.toUtf8());
+    // 退出文件
+    toFile.close();
+    return toFileStr;
 }

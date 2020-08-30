@@ -28,5 +28,7 @@ make
 ## Dependencies
 - [QT](https://www.qt.io/developers)
 - [qtermwidget](https://github.com/lxqt/qtermwidget)
+- [deepin-terminal](https://github.com/linuxdeepin/deepin-terminal)
 - [ssh2](https://github.com/libssh2/libssh2)
 - [openssl](https://github.com/openssl/openssl)
+

@@ -25,19 +25,10 @@ public:
     void connect() override;
     void disconnect() override;
 
-protected:
-    void resizeEvent(QResizeEvent *event) override;
-
 private:
-    void onTerminalInput(const char *data, int size);
-    void threadLoop();
-
-private:
+    QString createShellFile();
+    bool isInRemoteServer();
     SSHSettings settings_;
-    int sock_;
-    LIBSSH2_SESSION *session_;
-    LIBSSH2_CHANNEL *channel_;
-    std::thread sshReadThread_;
 };
 
 

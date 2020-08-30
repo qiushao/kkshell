@@ -306,6 +306,14 @@
     </message>
 </context>
 <context>
+    <name>SSHTerminal</name>
+    <message>
+        <location filename="../../terminal/ssh_terminal.cpp" line="123"/>
+        <source>Make sure that rz and sz commands have been installed in the server before right clicking to upload and download files.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SerialTerminal</name>
     <message>
         <location filename="../../terminal/serial_terminal.cpp" line="47"/>

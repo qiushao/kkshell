@@ -50,7 +50,6 @@ void EditCommandGroupDialog::onApply() {
         conf->setCString("command-bars", groupName.c_str(), "show");
         emit commandGroupAdd(groupName.c_str());
     }
-
     hide();
 }
 

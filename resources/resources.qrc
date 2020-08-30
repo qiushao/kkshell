@@ -18,5 +18,6 @@
     <file>images/new.png</file>
     <file>images/setting.png</file>
     <file>images/exit.png</file>
+    <file>script/ssh_login.sh</file>
   </qresource>
 </RCC>

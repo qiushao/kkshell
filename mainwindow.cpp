@@ -2,6 +2,8 @@
 #include <QTabWidget>
 #include <QDebug>
 #include <QMessageBox>
+#include <QTime>
+#include <QtCore/QCoreApplication>
 #include "resources/forms/ui_mainwindow.h"
 #include "common/config/config_manager.h"
 #include "common/utils/aes_utils.h"
@@ -290,10 +292,11 @@ void MainWindow::onOpenSession(std::string session) {
     }
 
     QObject::connect(terminal, &BaseTerminal::requestDisconnect, this, &MainWindow::onRequestDisconnect);
-    terminal->connect();
     tabWidget->addTab(terminal, *connectStateIcon, session.c_str());
     tabWidget->setCurrentWidget(terminal);
     terminal->setFocus();
+
+    terminal->connect();
 }
 
 BaseTerminal *MainWindow::createLocalShellSession(std::string session) {
