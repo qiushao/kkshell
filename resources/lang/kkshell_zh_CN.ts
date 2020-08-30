@@ -308,7 +308,7 @@
 <context>
     <name>SSHTerminal</name>
     <message>
-        <location filename="../../terminal/ssh_terminal.cpp" line="123"/>
+        <location filename="../../terminal/ssh_terminal.cpp" line="130"/>
         <source>Make sure that rz and sz commands have been installed in the server before right clicking to upload and download files.</source>
         <translation type="unfinished"></translation>
     </message>

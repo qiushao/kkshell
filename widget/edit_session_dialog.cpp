@@ -188,7 +188,7 @@ void EditSessionDialog::newSSHSessionLayout() {
     sshKeyFileLayout = new QHBoxLayout();
     sshKeyFileLabel = new QLabel("key file:");
     sshKeyFileEdit = new QLineEdit();
-    sshKeyFileEdit->setPlaceholderText("public key file path");
+    sshKeyFileEdit->setPlaceholderText("private key file path");
     sshKeyFileLayout->addWidget(sshKeyFileLabel);
     sshKeyFileLayout->addWidget(sshKeyFileEdit);
     sshSessionLayout->addLayout(sshKeyFileLayout);
@@ -314,7 +314,14 @@ void EditSessionDialog::editSSHSession(const std::string &sessionName) {
     sshHostEdit->setText(conf->getCString(sessionName.c_str(), "host"));
     sshPortEdit->setText(conf->getCString(sessionName.c_str(), "port"));
     sshUserEdit->setText(conf->getCString(sessionName.c_str(), "user"));
-    sshPasswdEdit->setText(conf->getCString(sessionName.c_str(), "passwd"));
+    if (strcmp("passwd", conf->getCString(sessionName.c_str(), "authType")) == 0) {
+        sshAuthTypeEdit->setCurrentText("passwd");
+        sshPasswdEdit->setText(conf->getCString(sessionName.c_str(), "passwd"));
+        sshKeyFileEdit->setEnabled(false);
+    } else {
+        sshAuthTypeEdit->setCurrentText("ssh-key");
+        sshKeyFileEdit->setText(conf->getCString(sessionName.c_str(), "keyFile"));
+    }
 }
 
 void EditSessionDialog::editSerialSession(const std::string &sessionName) {
