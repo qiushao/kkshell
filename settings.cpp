@@ -4,7 +4,7 @@
 
 #include "settings.h"
 #include <QDebug>
-#include <qtermwidget5/qtermwidget.h>
+#include "qtermwidget.h"
 #include "resources/forms/ui_settings.h"
 #include "common/config/config_manager.h"
 

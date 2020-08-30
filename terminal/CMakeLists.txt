@@ -1,4 +1,4 @@
-find_package(qtermwidget5)
+#find_package(qtermwidget5)
 find_package(Qt5 COMPONENTS Widgets SerialPort REQUIRED)
 find_package (Threads)
 add_library(terminals base_terminal.cpp base_terminal.h serial_terminal.cpp serial_terminal.h local_terminal.cpp local_terminal.h ssh_terminal.cpp ssh_terminal.h)

@@ -5,7 +5,7 @@
 #ifndef KKSHELL_BASE_TERMINAL_H
 #define KKSHELL_BASE_TERMINAL_H
 
-#include <qtermwidget5/qtermwidget.h>
+#include "qtermwidget.h"
 
 class BaseTerminal : public QTermWidget {
 

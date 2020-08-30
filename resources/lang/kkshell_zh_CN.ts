@@ -91,6 +91,55 @@
     </message>
 </context>
 <context>
+    <name>Konsole::Session</name>
+    <message>
+        <location filename="../../thirdparty/qtermwidget-48715f/lib/Session.cpp" line="454"/>
+        <source>Bell in session &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../thirdparty/qtermwidget-48715f/lib/Session.cpp" line="606"/>
+        <source>Session &apos;%1&apos; exited with status %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../thirdparty/qtermwidget-48715f/lib/Session.cpp" line="608"/>
+        <source>Session &apos;%1&apos; crashed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../thirdparty/qtermwidget-48715f/lib/Session.cpp" line="613"/>
+        <source>Session &apos;%1&apos; exited unexpectedly.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Konsole::TerminalDisplay</name>
+    <message>
+        <location filename="../../thirdparty/qtermwidget-48715f/lib/TerminalDisplay.cpp" line="1282"/>
+        <source>Size: XXX x XXX</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../thirdparty/qtermwidget-48715f/lib/TerminalDisplay.cpp" line="1294"/>
+        <source>Size: %1 x %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../thirdparty/qtermwidget-48715f/lib/TerminalDisplay.cpp" line="3180"/>
+        <source>&lt;qt&gt;Output has been &lt;a href=&quot;http://en.wikipedia.org/wiki/Flow_control&quot;&gt;suspended&lt;/a&gt; by pressing Ctrl+S.  Press &lt;b&gt;Ctrl+Q&lt;/b&gt; to resume.&lt;/qt&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Konsole::Vt102Emulation</name>
+    <message>
+        <location filename="../../thirdparty/qtermwidget-48715f/lib/Vt102Emulation.cpp" line="1113"/>
+        <source>No keyboard translator available.  The information needed to convert key presses into characters to send to the terminal is missing.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <location filename="../forms/mainwindow.ui" line="38"/>
@@ -306,10 +355,111 @@
     </message>
 </context>
 <context>
+    <name>QObject</name>
+    <message>
+        <location filename="../../thirdparty/qtermwidget-48715f/lib/ColorScheme.cpp" line="278"/>
+        <location filename="../../thirdparty/qtermwidget-48715f/lib/ColorScheme.cpp" line="293"/>
+        <source>Un-named Color Scheme</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../thirdparty/qtermwidget-48715f/lib/ColorScheme.cpp" line="464"/>
+        <source>Accessible Color Scheme</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../thirdparty/qtermwidget-48715f/lib/Filter.cpp" line="515"/>
+        <source>Open Link</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../thirdparty/qtermwidget-48715f/lib/Filter.cpp" line="516"/>
+        <source>Copy Link Address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../thirdparty/qtermwidget-48715f/lib/Filter.cpp" line="520"/>
+        <source>Send Email To...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../thirdparty/qtermwidget-48715f/lib/Filter.cpp" line="521"/>
+        <source>Copy Email Address</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QTermWidget</name>
+    <message>
+        <location filename="../../thirdparty/qtermwidget-48715f/lib/qtermwidget.cpp" line="459"/>
+        <source>Color Scheme Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../thirdparty/qtermwidget-48715f/lib/qtermwidget.cpp" line="460"/>
+        <source>Cannot load color scheme: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SSHTerminal</name>
     <message>
         <location filename="../../terminal/ssh_terminal.cpp" line="130"/>
         <source>Make sure that rz and sz commands have been installed in the server before right clicking to upload and download files.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SearchBar</name>
+    <message>
+        <location filename="../../thirdparty/qtermwidget-48715f/lib/SearchBar.ui" line="14"/>
+        <location filename="../../cmake-build-debug/thirdparty/qtermwidget-48715f/ui_SearchBar.h" line="106"/>
+        <source>SearchBar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../thirdparty/qtermwidget-48715f/lib/SearchBar.ui" line="20"/>
+        <location filename="../../cmake-build-debug/thirdparty/qtermwidget-48715f/ui_SearchBar.h" line="107"/>
+        <source>X</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../thirdparty/qtermwidget-48715f/lib/SearchBar.ui" line="32"/>
+        <location filename="../../cmake-build-debug/thirdparty/qtermwidget-48715f/ui_SearchBar.h" line="108"/>
+        <source>Find:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../thirdparty/qtermwidget-48715f/lib/SearchBar.ui" line="42"/>
+        <location filename="../../cmake-build-debug/thirdparty/qtermwidget-48715f/ui_SearchBar.h" line="109"/>
+        <source>&lt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../thirdparty/qtermwidget-48715f/lib/SearchBar.ui" line="54"/>
+        <location filename="../../cmake-build-debug/thirdparty/qtermwidget-48715f/ui_SearchBar.h" line="110"/>
+        <source>&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../thirdparty/qtermwidget-48715f/lib/SearchBar.ui" line="66"/>
+        <location filename="../../cmake-build-debug/thirdparty/qtermwidget-48715f/ui_SearchBar.h" line="111"/>
+        <source>...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../thirdparty/qtermwidget-48715f/lib/SearchBar.cpp" line="40"/>
+        <source>Match case</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../thirdparty/qtermwidget-48715f/lib/SearchBar.cpp" line="46"/>
+        <source>Regular expression</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../thirdparty/qtermwidget-48715f/lib/SearchBar.cpp" line="50"/>
+        <source>Highlight all matches</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

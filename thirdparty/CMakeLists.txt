@@ -1,1 +1,2 @@
 add_subdirectory(simpleini)
+add_subdirectory(qtermwidget-48715f)
