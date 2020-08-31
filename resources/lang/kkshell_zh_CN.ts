@@ -391,12 +391,12 @@
 <context>
     <name>QTermWidget</name>
     <message>
-        <location filename="../../thirdparty/qtermwidget-48715f/lib/qtermwidget.cpp" line="459"/>
+        <location filename="../../thirdparty/qtermwidget-48715f/lib/qtermwidget.cpp" line="464"/>
         <source>Color Scheme Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../thirdparty/qtermwidget-48715f/lib/qtermwidget.cpp" line="460"/>
+        <location filename="../../thirdparty/qtermwidget-48715f/lib/qtermwidget.cpp" line="465"/>
         <source>Cannot load color scheme: %1</source>
         <translation type="unfinished"></translation>
     </message>

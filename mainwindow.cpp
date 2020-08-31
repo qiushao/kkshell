@@ -291,12 +291,12 @@ void MainWindow::onOpenSession(std::string session) {
         return;
     }
 
+    terminal->connect();
     QObject::connect(terminal, &BaseTerminal::requestDisconnect, this, &MainWindow::onRequestDisconnect);
     tabWidget->addTab(terminal, *connectStateIcon, session.c_str());
     tabWidget->setCurrentWidget(terminal);
     terminal->setFocus();
 
-    terminal->connect();
 }
 
 BaseTerminal *MainWindow::createLocalShellSession(std::string session) {

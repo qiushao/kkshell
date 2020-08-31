@@ -51,22 +51,22 @@ void SSHTerminal::disconnect() {
 *******************************************************************************/
 bool SSHTerminal::isInRemoteServer()
 {
-//    int pid = getForegroundPid();
-//    qDebug() << "getShellPID = " << pid << endl;
-//    if (pid <= 0) {
-//        return false;
-//    }
-//    QString pidFilepath = "/proc/" + QString::number(pid) + "/comm";
-//    QFile pidFile(pidFilepath);
-//    if (pidFile.exists()) {
-//        pidFile.open(QIODevice::ReadOnly | QIODevice::Text);
-//        QString commString(pidFile.readLine());
-//        pidFile.close();
-//        if ("expect" == commString.trimmed()) {
-//            return true;
-//        }
-//    }
-    return true;
+    int pid = getForegroundPID();
+    qDebug() << "getShellPID = " << pid << endl;
+    if (pid <= 0) {
+        return false;
+    }
+    QString pidFilepath = "/proc/" + QString::number(pid) + "/comm";
+    QFile pidFile(pidFilepath);
+    if (pidFile.exists()) {
+        pidFile.open(QIODevice::ReadOnly | QIODevice::Text);
+        QString commString(pidFile.readLine());
+        pidFile.close();
+        if ("expect" == commString.trimmed()) {
+            return true;
+        }
+    }
+    return false;
 }
 
 /*******************************************************************************
