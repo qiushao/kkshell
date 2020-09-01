@@ -13,7 +13,7 @@ include(CheckFunctionExists)
 include(CheckIncludeFile)
 
 option(UPDATE_TRANSLATIONS "Update source translation translations/*.ts files" OFF)
-option(BUILD_EXAMPLE "Build example application. Default OFF." OFF)
+option(BUILD_EXAMPLE "Build example application. Default OFF." ON)
 option(QTERMWIDGET_USE_UTEMPTER "Uses the libutempter library. Mainly for FreeBSD" OFF)
 option(QTERMWIDGET_BUILD_PYTHON_BINDING "Build python binding" OFF)
 option(USE_UTF8PROC "Use libutf8proc for better Unicode support. Default OFF" OFF)
@@ -279,7 +279,7 @@ configure_file(
 
 configure_file(
     "${PROJECT_SOURCE_DIR}/lib/qtermwidget_version.h.in"
-    "${CMAKE_BINARY_DIR}/lib/qtermwidget_version.h"
+    "${CMAKE_CURRENT_BINARY_DIR}/lib/qtermwidget_version.h"
     @ONLY
 )
 
