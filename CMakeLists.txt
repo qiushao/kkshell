@@ -41,3 +41,13 @@ set(PROJECT_LIBS config utils terminals)
 target_link_libraries(kkshell PRIVATE Qt5::Core Qt5::Widgets ${THIRD_PARTY_LIBS} ${PROJECT_LIBS})
 
 qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
+
+INSTALL(TARGETS kkshell
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        )
+
+install(FILES resources/kkshell.desktop
+        DESTINATION ${CMAKE_INSTALL_PREFIX}/share/applications/)
+
+install(FILES resources/images/kkshell.png
+        DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/apps/)

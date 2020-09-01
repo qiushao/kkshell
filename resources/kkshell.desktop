@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=kkshell
+Icon=kkshell.png
+Exec=kkshell
+Comment=kkshell
+Categories=Development;IDE;
+Terminal=false

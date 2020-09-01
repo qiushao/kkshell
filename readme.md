@@ -22,8 +22,12 @@ cd kkshell
 mkdir build && cd build
 cmake ..
 make
-./kkshell 
+sudo make install
+kkshell
 ```
+
+kkshell will be installed at /usr/local/bin. and other configure will be installed at /usr/local/share/qtermwidget5
+
 
 ## Dependencies
 - [QT](https://www.qt.io/developers)
