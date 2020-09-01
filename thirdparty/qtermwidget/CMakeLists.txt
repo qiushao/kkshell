@@ -34,6 +34,8 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(QT_MINIMUM_VERSION "5.10.0")
 set(LXQTBT_MINIMUM_VERSION "0.6.0")
 
+set(CMAKE_INSTALL_PREFIX "/usr")
+
 find_package(Qt5Widgets "${QT_MINIMUM_VERSION}" REQUIRED)
 find_package(Qt5LinguistTools "${QT_MINIMUM_VERSION}" REQUIRED)
 find_package(lxqt-build-tools ${LXQTBT_MINIMUM_VERSION} REQUIRED)

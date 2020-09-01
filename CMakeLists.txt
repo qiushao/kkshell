@@ -14,6 +14,8 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
+set(CMAKE_INSTALL_PREFIX "/usr")
+
 find_package(Qt5 COMPONENTS Core Widgets LinguistTools REQUIRED)
 
 add_subdirectory(thirdparty)
