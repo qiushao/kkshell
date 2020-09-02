@@ -26,7 +26,7 @@ sudo make install
 kkshell
 ```
 
-kkshell will be installed at /usr/local/bin. and other configure will be installed at /usr/local/share/kkterminalwidget
+kkshell will be installed at /usr/bin. and other configure like color scheme etc will be installed at /usr/share/kkterminalwidget
 
 
 ## Dependencies
