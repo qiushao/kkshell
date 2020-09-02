@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.1.0 FATAL_ERROR)
 # The cmake_minimum_required(VERSION) command implicitly invokes the cmake_policy(VERSION)
 # command to specify that the current project code is written for the given range of CMake
 # versions.
-project(terminalwidget)
+project(kkterminalwidget)
 
 include(GNUInstallDirs)
 include(GenerateExportHeader)
@@ -56,7 +56,7 @@ if(APPLE)
     endif()
 endif()
 
-set(QTERMWIDGET_LIBRARY_NAME terminalwidget)
+set(QTERMWIDGET_LIBRARY_NAME kkterminalwidget)
 
 
 # main library

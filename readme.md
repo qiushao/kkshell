@@ -26,7 +26,7 @@ sudo make install
 kkshell
 ```
 
-kkshell will be installed at /usr/local/bin. and other configure will be installed at /usr/local/share/qtermwidget5
+kkshell will be installed at /usr/local/bin. and other configure will be installed at /usr/local/share/kkterminalwidget
 
 
 ## Dependencies
