@@ -52,4 +52,4 @@ install(FILES resources/kkshell.desktop
         DESTINATION ${CMAKE_INSTALL_PREFIX}/share/applications/)
 
 install(FILES resources/images/kkshell.png
-        DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/apps/)
+        DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/128x128/apps)
