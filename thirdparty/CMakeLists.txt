@@ -1,2 +1,3 @@
 add_subdirectory(simpleini)
 add_subdirectory(qtermwidget)
+add_subdirectory(spdlog)

@@ -9,6 +9,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 include_directories(.)
+include_directories(thirdparty/spdlog/spdlog-1.5.0/include)
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
