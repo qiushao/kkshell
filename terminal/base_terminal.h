@@ -24,14 +24,8 @@ signals:
     void requestDisconnect(BaseTerminal *terminal);
 
 protected:
-    void calFontGeometry();
-    void calGeometry();
     QFont *font_;
     bool connect_;
-    int fontWidth_;
-    int fontHeight_;
-    int lines_;
-    int columns_;
 };
 
 
