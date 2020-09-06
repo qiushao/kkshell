@@ -31,16 +31,32 @@ BaseTerminal::BaseTerminal(QWidget *parent) : QTermWidget(0, parent) {
 
     //set scroll bar
     setScrollBarPosition(ScrollBarRight);
+
+    QObject::connect(this, &QTermWidget::receivedData, this, &BaseTerminal::writeLog);
 }
 
 BaseTerminal::~BaseTerminal() {
-
-}
-
-void BaseTerminal::clear() {
-    QTermWidget::clear();
+    disableLogSession();
 }
 
 bool BaseTerminal::isConnect() {
     return connect_;
+}
+
+void BaseTerminal::logSession(const std::string &logPath) {
+    logPath_ = logPath;
+    logFp_ = fopen(logPath.c_str(), "wb+");
+    logging_ = true;
+}
+
+void BaseTerminal::disableLogSession() {
+    logging_ = false;
+    fflush(logFp_);
+    fclose(logFp_);
+}
+
+void BaseTerminal::writeLog(const char *buf, int len) {
+    if (logging_) {
+        fwrite(buf, len, 1, logFp_);
+    }
 }

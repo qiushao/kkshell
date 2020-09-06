@@ -906,7 +906,7 @@ void Session::zmodemFinished()
 void Session::onReceiveBlock( const char * buf, int len )
 {
     _emulation->receiveData( buf, len );
-    emit receivedData( QString::fromLatin1( buf, len ) );
+    emit receivedData(buf, len);
 }
 
 QSize Session::size()

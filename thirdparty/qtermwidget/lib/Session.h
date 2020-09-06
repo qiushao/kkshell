@@ -418,7 +418,7 @@ signals:
     /**
      * Emitted when output is received from the terminal process.
      */
-    void receivedData( const QString & text );
+    void receivedData(const char * buf, int len);
 
     /** Emitted when the session's title has changed. */
     void titleChanged();

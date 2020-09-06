@@ -17,15 +17,23 @@ public:
 
     virtual void connect() = 0;
     virtual void disconnect() = 0;
-    void clear();
     bool isConnect();
+
+    void logSession(const std::string &logPath);
+    void disableLogSession();
 
 signals:
     void requestDisconnect(BaseTerminal *terminal);
 
 protected:
-    QFont *font_;
-    bool connect_;
+    void writeLog(const char * buf, int len);
+
+protected:
+    QFont *font_ = nullptr;
+    bool connect_ = false;
+    bool logging_ = false;
+    std::string logPath_;
+    FILE *logFp_ = nullptr;
 };
 
 
