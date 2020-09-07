@@ -56,6 +56,9 @@ void MainWindow::onTabChanged(int index) {
     if (index < 0) {
         ui->actionConnect->setEnabled(false);
         ui->actionDisconnect->setEnabled(false);
+        ui->actionLogSession->setEnabled(false);
+        ui->actionDisableLogSession->setEnabled(false);
+        currentTab = nullptr;
         return;
     }
     currentTab = dynamic_cast<BaseTerminal *>(tabWidget->widget(index));

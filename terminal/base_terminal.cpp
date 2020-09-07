@@ -51,8 +51,11 @@ void BaseTerminal::logSession(const std::string &logPath) {
 
 void BaseTerminal::disableLogSession() {
     logging_ = false;
-    fflush(logFp_);
-    fclose(logFp_);
+    if (logFp_) {
+        fflush(logFp_);
+        fclose(logFp_);
+        logFp_ = nullptr;
+    }
 }
 
 void BaseTerminal::writeLog(const char *buf, int len) {
