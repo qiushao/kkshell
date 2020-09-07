@@ -60,3 +60,7 @@ void BaseTerminal::writeLog(const char *buf, int len) {
         fwrite(buf, len, 1, logFp_);
     }
 }
+
+bool BaseTerminal::isLoggingSession() {
+    return logging_;
+}

@@ -32,14 +32,20 @@ public:
     void onActionOpenSession();
     void onActionConnect();
     void onActionDisconnect();
+
     void onActionSelectAll();
     void onActionCopy();
     void onActionPaste();
     void onActionClear();
     void onActionFind();
+
     void onActionShowToolsBar();
     void onActionShowButtonBar();
     void onActionShowStatusBar();
+
+    std::string selectLogPath();
+    void onActionLogSession();
+    void onActionDisableLogSession();
 
 private:
     void actionInit();

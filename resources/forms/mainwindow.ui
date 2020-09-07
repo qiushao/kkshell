@@ -63,8 +63,12 @@
     <addaction name="separator"/>
     <addaction name="menucommand_group"/>
     <addaction name="separator"/>
+    <addaction name="actionLogSession"/>
+    <addaction name="actionDisableLogSession"/>
+    <addaction name="separator"/>
     <addaction name="actionSettings"/>
     <addaction name="actionExit"/>
+    <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuedit">
     <property name="title">
@@ -118,6 +122,10 @@
    <addaction name="separator"/>
    <addaction name="actionFind"/>
    <addaction name="actionClear"/>
+   <addaction name="separator"/>
+   <addaction name="actionLogSession"/>
+   <addaction name="actionDisableLogSession"/>
+   <addaction name="separator"/>
   </widget>
   <widget class="QToolBar" name="commandButtonBar">
    <property name="windowTitle">
@@ -316,6 +324,30 @@
    </property>
    <property name="toolTip">
     <string>new command button</string>
+   </property>
+  </action>
+  <action name="actionLogSession">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../resources.qrc">
+     <normaloff>:/images/log_session.png</normaloff>:/images/log_session.png</iconset>
+   </property>
+   <property name="text">
+    <string>log session</string>
+   </property>
+  </action>
+  <action name="actionDisableLogSession">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../resources.qrc">
+     <normaloff>:/images/disable_log_session.png</normaloff>:/images/disable_log_session.png</iconset>
+   </property>
+   <property name="text">
+    <string>disable log session</string>
    </property>
   </action>
  </widget>

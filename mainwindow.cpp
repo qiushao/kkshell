@@ -2,6 +2,7 @@
 #include <QTabWidget>
 #include <QDebug>
 #include <QMessageBox>
+#include <QFileDialog>
 #include <QTime>
 #include <QtCore/QCoreApplication>
 #include "resources/forms/ui_mainwindow.h"
@@ -67,6 +68,15 @@ void MainWindow::onTabChanged(int index) {
         ui->actionDisconnect->setEnabled(false);
         ui->statusBar->showMessage("disconnect");
     }
+
+    if (currentTab->isLoggingSession()) {
+        ui->actionLogSession->setEnabled(false);
+        ui->actionDisableLogSession->setEnabled(true);
+    } else {
+        ui->actionLogSession->setEnabled(true);
+        ui->actionDisableLogSession->setEnabled(false);
+    }
+
 }
 
 void MainWindow::onTabCloseRequested(int index) {
@@ -211,6 +221,9 @@ void MainWindow::actionInit() {
     QObject::connect(ui->actionEditCommandGroup, &QAction::triggered, this, &MainWindow::onActionEditCommandGroup);
     QObject::connect(ui->actionDeleteCommandGroup, &QAction::triggered, this, &MainWindow::onActionDeleteCommandGroup);
     QObject::connect(ui->actionNewCommandButton, &QAction::triggered, this, &MainWindow::onActionNewCommandButton);
+
+    QObject::connect(ui->actionLogSession, &QAction::triggered, this, &MainWindow::onActionLogSession);
+    QObject::connect(ui->actionDisableLogSession, &QAction::triggered, this, &MainWindow::onActionDisableLogSession);
 }
 
 void MainWindow::loadCommandBar(const QString &groupName) {
@@ -433,5 +446,42 @@ void MainWindow::onDeleteCommandButton(const QString &commandName) {
     }
 
     loadCommandBar(groupName.c_str());
+}
+
+std::string MainWindow::selectLogPath() {
+    QFileDialog *fileDialog = new QFileDialog(this);
+    fileDialog->setWindowTitle("select log file");
+    fileDialog->setDirectory(".");
+    fileDialog->setViewMode(QFileDialog::Detail);
+    if(fileDialog->exec()) {
+        QStringList fileNames = fileDialog->selectedFiles();
+        if (!fileNames.empty()) {
+            return fileNames.first().toStdString();
+        }
+    }
+    return "";
+}
+
+void MainWindow::onActionDisableLogSession() {
+    if (currentTab == nullptr) {
+        return;
+    }
+    currentTab->disableLogSession();
+    ui->actionLogSession->setEnabled(true);
+    ui->actionDisableLogSession->setEnabled(false);
+}
+
+void MainWindow::onActionLogSession() {
+    if (currentTab == nullptr) {
+        return;
+    }
+
+    std::string logPath = selectLogPath();
+    if (logPath.empty()) {
+        return;
+    }
+    currentTab->logSession(logPath);
+    ui->actionLogSession->setEnabled(false);
+    ui->actionDisableLogSession->setEnabled(true);
 }
 

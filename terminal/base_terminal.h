@@ -19,6 +19,7 @@ public:
     virtual void disconnect() = 0;
     bool isConnect();
 
+    bool isLoggingSession();
     void logSession(const std::string &logPath);
     void disableLogSession();
 
