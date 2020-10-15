@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QSplitter>
+#include <QTextEdit>
 #include "terminal/base_terminal.h"
 #include "settings.h"
 #include "session_manager.h"
@@ -47,6 +49,8 @@ public:
     void onActionLogSession();
     void onActionDisableLogSession();
 
+    bool eventFilter(QObject *obj, QEvent *e) override;
+
 private:
     void actionInit();
     void buttonBarInit();
@@ -73,7 +77,9 @@ private:
     EditSessionDialog *newLocalShellSessionDialog = nullptr;
     EditSessionDialog *newSSHSessionDialog = nullptr;
     EditSessionDialog *newSerialSessionDialog = nullptr;
+    QSplitter *splitter = nullptr;
     QTabWidget *tabWidget = nullptr;
+    QTextEdit *commandWindow = nullptr;
     BaseTerminal *currentTab = nullptr;
     QIcon *connectStateIcon = nullptr;
     QIcon *disconnectStateIcon = nullptr;

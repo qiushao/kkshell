@@ -2,6 +2,7 @@
 #include <QTabWidget>
 #include <QDebug>
 #include <QMessageBox>
+#include <QScreen>
 #include <QFileDialog>
 #include <QTime>
 #include <QtCore/QCoreApplication>
@@ -24,10 +25,21 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     setWindowState(Qt::WindowMaximized);
     setContextMenuPolicy(Qt::NoContextMenu);
+
+    splitter = new QSplitter(Qt::Vertical, this);
     tabWidget = new QTabWidget(this);
     tabWidget->setTabsClosable(true);
     tabWidget->setMovable(true);
-    setCentralWidget(tabWidget);
+    commandWindow = new QTextEdit(this);
+    commandWindow->installEventFilter(this);
+    splitter->addWidget(tabWidget);
+    splitter->addWidget(commandWindow);
+    setCentralWidget(splitter);
+    int height = QGuiApplication::primaryScreen()->size().height()
+            - ui->menubar->height()
+            - ui->toolsBar->height()
+            - ui->commandButtonBar->height();
+    splitter->setSizes(QList<int>({static_cast<int>(height*0.9), static_cast<int>(height*0.1)}));
 
     connectStateIcon = new QIcon();
     disconnectStateIcon = new QIcon();
@@ -486,5 +498,24 @@ void MainWindow::onActionLogSession() {
     currentTab->logSession(logPath);
     ui->actionLogSession->setEnabled(false);
     ui->actionDisableLogSession->setEnabled(true);
+}
+
+bool MainWindow::eventFilter(QObject *obj, QEvent *e) {
+    if (e->type() == QEvent::KeyPress) {
+        QKeyEvent *event = static_cast<QKeyEvent *>(e);
+        if (event->key() == Qt::Key_Return) {
+            if (event->modifiers() & Qt::ControlModifier) {
+                commandWindow->append("");
+            } else {
+                if (currentTab == nullptr) {
+                    return false;
+                }
+                currentTab->sendText(commandWindow->toPlainText() + "\r");
+                commandWindow->clear();
+            }
+            return true;
+        }
+    }
+    return false;
 }
 
