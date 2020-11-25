@@ -6,8 +6,6 @@
 #define KKSHELL_SSH_TERMINAL_H
 
 #include "base_terminal.h"
-#include <thread>
-#include <libssh2.h>
 
 struct SSHSettings {
     std::string host;
