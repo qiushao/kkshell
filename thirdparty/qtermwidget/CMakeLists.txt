@@ -31,8 +31,8 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake")
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 # Minimum Versions
-set(QT_MINIMUM_VERSION "5.10.0")
-set(LXQTBT_MINIMUM_VERSION "0.6.0")
+set(QT_MINIMUM_VERSION "5.8.0")
+set(LXQTBT_MINIMUM_VERSION "0.4.0")
 
 set(CMAKE_INSTALL_PREFIX "/usr")
 
@@ -44,7 +44,7 @@ if(USE_UTF8PROC)
     find_package(Utf8Proc REQUIRED)
 endif()
 
-include(LXQtPreventInSourceBuilds)
+# include(LXQtPreventInSourceBuilds)
 include(LXQtTranslateTs)
 include(LXQtCompilerSettings NO_POLICY_SCOPE)
 include(LXQtCreatePkgConfigFile)
