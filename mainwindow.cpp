@@ -425,9 +425,9 @@ void MainWindow::onActionDeleteCommandGroup() {
         ConfigManager *conf = ConfigManager::getInstance();
         conf->deleteSection(groupName.c_str());
         conf->deleteKey("command-bars", groupName.c_str());
+        commandBarGroup->removeItem(commandBarGroup->currentIndex());
     }
 
-    commandBarGroup->removeItem(commandBarGroup->currentIndex());
 }
 
 void MainWindow::onActionNewCommandButton() {
