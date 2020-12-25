@@ -1,0 +1,30 @@
+<RCC>
+  <qresource prefix="/">
+    <file>settings.json</file>
+    <file>script/ssh_login.sh</file>
+    <file>images/disable_log_session.png</file>
+    <file>images/log_session.png</file>
+    <file>images/connect_state.png</file>
+    <file>images/disconnect_state.png</file>
+    <file>images/show.png</file>
+    <file>images/delete.png</file>
+    <file>images/edit.png</file>
+    <file>images/open.png</file>
+    <file>images/application.png</file>
+    <file>images/clear.png</file>
+    <file>images/connect.png</file>
+    <file>images/disconnect.png</file>
+    <file>images/copy.png</file>
+    <file>images/copy_all.png</file>
+    <file>images/find.png</file>
+    <file>images/paste.png</file>
+    <file>images/save.png</file>
+    <file>images/new.png</file>
+    <file>images/setting.png</file>
+    <file>images/toggle_on.png</file>
+    <file>images/toggle_off.png</file>
+    <file>images/exit.png</file>
+    <file>images/category.png</file>
+    <file>images/session.png</file>
+  </qresource>
+</RCC>

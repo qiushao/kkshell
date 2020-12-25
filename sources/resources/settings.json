@@ -1,0 +1,28 @@
+{
+    "appVersion": "V1.0.00",
+    "fontFamily": "Monospace",
+    "fontSize": 16,
+    "colorScheme": "Tango",
+    "sessionCategories": [
+        {
+            "categoryName": "default",
+            "sessions": [
+                {
+                    "sessionName": "localhost",
+                    "sessionType": 0
+                }
+            ]
+        }
+    ],
+    "commandCategories": [
+        {
+            "categoryName": "default",
+            "commands": [
+                {
+                    "commandName": "disable kernel log",
+                    "commandString" : "echo 0 >/proc/sys/kernel/printk\r"
+                }
+            ]
+        }
+    ]
+}
