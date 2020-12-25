@@ -1,38 +1,45 @@
 
 # kkshell
+类似 xshell & SecureCRT 的终端管理工具，目前只支持 Linux 系统。
+支持协议：串口，ssh，local-shell
 
-A simple terminal for serial, ssh, telnet, local shell。
+已实现特性：
+- 会话管理
+- 多标签
+- 日记保存
+- Button Bar
+- Command Window
 
-## build
-### install dependency
-for debian base system, just apt install:
+TODO：
+- 日志保存改进：添加指定格式的日期前缀，日志分片保存
+- Xmodem、Ymodem、Zmodem 等文件传输协议支持
+- 提供 Lua api，用户可以编写运行 Lua 脚本
+- 使用 libssh2 替代 expect zssh 登录脚本
+
+![screen shot](docs/screenshot/kkshell-screenshot.png)
+
+
+## 安装依赖
+ubuntu 系列的系统：
 ```
-sudo apt install build-essential cmake qt5-default qtcreator
-sudo apt install qt5-doc qt5-doc-html qtbase5-doc-html qtbase5-examples
-sudo apt install libqt5serialport5-dev qt5serialport-examples
+sudo apt install build-essential cmake qt5-default libqt5serialport5-dev
 sudo apt install libutf8proc-dev lxqt-build-tools
-sudo apt install libssl-dev
 sudo apt install expect zssh
-``` 
+```
 
-### build and run
+## 编译运行
 ```
 git clone https://github.com/qiushao/kkshell.git
 cd kkshell
-mkdir build && cd build
+mkdir build
+cd build
 cmake ..
-make
+make -j
 sudo make install
 kkshell
 ```
 
-kkshell will be installed at /usr/bin. and other configure like color scheme etc will be installed at /usr/share/kkterminalwidget
 
-
-## Dependencies
-- [QT](https://www.qt.io/developers)
+## 感谢以下开源项目
+- [QT](https://www.qt.io)
 - [qtermwidget](https://github.com/lxqt/qtermwidget)
-- [deepin-terminal](https://github.com/linuxdeepin/deepin-terminal)
-- [ssh2](https://github.com/libssh2/libssh2)
-- [openssl](https://github.com/openssl/openssl)
-

@@ -241,19 +241,20 @@ void SessionListWidget::onEditSessionActioin() {
         return;
     }
     Session session = var.value<Session>();
+    auto parent = item->parent();
     if (session.sessionType == SESSION_TYPE::LOCAL_SHELL) {
         qDebug() << "edit local session";
-        LocalSessionEditor localSessionEditor(this, currentItem()->text(0), session);
+        LocalSessionEditor localSessionEditor(this, parent->text(0), session);
         connect(&localSessionEditor, &LocalSessionEditor::updateSession, this, &SessionListWidget::onUpdateSession);
         localSessionEditor.exec();
     } else if (session.sessionType == SESSION_TYPE::SSH2) {
         qDebug() << "edit ssh session";
-        SSHSessionEditor sshSessionEditor(this, currentItem()->text(0), session);
+        SSHSessionEditor sshSessionEditor(this, parent->text(0), session);
         connect(&sshSessionEditor, &SSHSessionEditor::updateSession, this, &SessionListWidget::onUpdateSession);
         sshSessionEditor.exec();
     } else if (session.sessionType == SESSION_TYPE::SERIAL) {
         qDebug() << "edit serial session";
-        SerialSessionEditor serialSessionEditor(this, currentItem()->text(0), session);
+        SerialSessionEditor serialSessionEditor(this, parent->text(0), session);
         connect(&serialSessionEditor, &SerialSessionEditor::updateSession, this, &SessionListWidget::onUpdateSession);
         serialSessionEditor.exec();
     }
