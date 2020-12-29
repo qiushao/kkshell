@@ -165,6 +165,7 @@ void SettingManager::updateSession(const std::string &categoryName, const std::s
 
     for(Session &tmpSession : pCategory->sessionList) {
         if (tmpSession.sessionName == oldSessionName) {
+            qDebug() << "SettingManager updateSession ...";
             tmpSession = session;
             serialize();
             break;

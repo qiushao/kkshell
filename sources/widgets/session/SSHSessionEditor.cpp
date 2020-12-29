@@ -5,15 +5,17 @@
 #include "SSHSessionEditor.h"
 #include "setting/SettingManager.h"
 
-SSHSessionEditor::SSHSessionEditor(QWidget *parent, const QString &categoryName) :QDialog(parent) {
+SSHSessionEditor::SSHSessionEditor(QWidget *parent, const QString &categoryName) : QDialog(parent) {
     _categoryName = categoryName;
 
     initWidgets();
     _categoryEdit->setText(_categoryName);
     _categoryEdit->setEnabled(false);
+    _portEdit->setText("22");
 }
 
-SSHSessionEditor::SSHSessionEditor(QWidget *parent, const QString &categoryName, const Session &session) :QDialog(parent) {
+SSHSessionEditor::SSHSessionEditor(QWidget *parent, const QString &categoryName, const Session &session) : QDialog(
+        parent) {
     _categoryName = categoryName;
     _oldSession = session;
     _isEdit = true;
@@ -89,10 +91,8 @@ void SSHSessionEditor::onOK() {
     session.keyFile = _keyFileEdit->text().toStdString();
 
     if (_isEdit) {
-        if (session.sessionName != _oldSession.sessionName) {
-            settingManager->updateSession(_categoryName.toStdString(), _oldSession.sessionName, session);
-            emit updateSession(_categoryName, _oldSession, session);
-        }
+        settingManager->updateSession(_categoryName.toStdString(), _oldSession.sessionName, session);
+        emit updateSession(_categoryName, _oldSession, session);
     } else {
         settingManager->addSession(_categoryName.toStdString(), session);
         emit newSession(_categoryName, session);

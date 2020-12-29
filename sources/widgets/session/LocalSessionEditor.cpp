@@ -5,7 +5,7 @@
 #include "LocalSessionEditor.h"
 #include "setting/SettingManager.h"
 
-LocalSessionEditor::LocalSessionEditor(QWidget *parent, const QString &categoryName) :QDialog(parent) {
+LocalSessionEditor::LocalSessionEditor(QWidget *parent, const QString &categoryName) : QDialog(parent) {
     _categoryName = categoryName;
 
     initWidgets();
@@ -13,7 +13,8 @@ LocalSessionEditor::LocalSessionEditor(QWidget *parent, const QString &categoryN
     _categoryEdit->setEnabled(false);
 }
 
-LocalSessionEditor::LocalSessionEditor(QWidget *parent, const QString &categoryName, const Session &session) :QDialog(parent) {
+LocalSessionEditor::LocalSessionEditor(QWidget *parent, const QString &categoryName, const Session &session) : QDialog(
+        parent) {
     _categoryName = categoryName;
     _oldSession = session;
     _isEdit = true;
@@ -58,10 +59,8 @@ void LocalSessionEditor::onOK() {
     session.sessionName = _sessionNameEdit->text().toStdString();
 
     if (_isEdit) {
-        if (session.sessionName != _oldSession.sessionName) {
-            settingManager->updateSession(_categoryName.toStdString(), _oldSession.sessionName, session);
-            emit updateSession(_categoryName, _oldSession, session);
-        }
+        settingManager->updateSession(_categoryName.toStdString(), _oldSession.sessionName, session);
+        emit updateSession(_categoryName, _oldSession, session);
     } else {
         settingManager->addSession(_categoryName.toStdString(), session);
         emit newSession(_categoryName, session);

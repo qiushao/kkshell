@@ -7,7 +7,7 @@
 #include "SerialSessionEditor.h"
 #include "setting/SettingManager.h"
 
-SerialSessionEditor::SerialSessionEditor(QWidget *parent, const QString &categoryName) :QDialog(parent) {
+SerialSessionEditor::SerialSessionEditor(QWidget *parent, const QString &categoryName) : QDialog(parent) {
     _categoryName = categoryName;
 
     initWidgets();
@@ -20,7 +20,8 @@ SerialSessionEditor::SerialSessionEditor(QWidget *parent, const QString &categor
     _flowControlEdit->setText("0");
 }
 
-SerialSessionEditor::SerialSessionEditor(QWidget *parent, const QString &categoryName, const Session &session) :QDialog(parent) {
+SerialSessionEditor::SerialSessionEditor(QWidget *parent, const QString &categoryName, const Session &session)
+        : QDialog(parent) {
     _categoryName = categoryName;
     _oldSession = session;
     _isEdit = true;
@@ -98,10 +99,8 @@ void SerialSessionEditor::onOK() {
     session.flowControl = _flowControlEdit->text().toInt();
 
     if (_isEdit) {
-        if (session.sessionName != _oldSession.sessionName) {
-            settingManager->updateSession(_categoryName.toStdString(), _oldSession.sessionName, session);
-            emit updateSession(_categoryName, _oldSession, session);
-        }
+        settingManager->updateSession(_categoryName.toStdString(), _oldSession.sessionName, session);
+        emit updateSession(_categoryName, _oldSession, session);
     } else {
         settingManager->addSession(_categoryName.toStdString(), session);
         emit newSession(_categoryName, session);
