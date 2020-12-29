@@ -5,14 +5,15 @@
 #include "CommandButtonEditor.h"
 #include "setting/SettingManager.h"
 
-CommandButtonEditor::CommandButtonEditor(QWidget *parent, const QString &categoryName) :QDialog(parent) {
+CommandButtonEditor::CommandButtonEditor(QWidget *parent, const QString &categoryName) : QDialog(parent) {
     _categoryName = categoryName;
     initWidgets();
     _categoryEdit->setText(_categoryName);
     _categoryEdit->setEnabled(false);
 }
 
-CommandButtonEditor::CommandButtonEditor(QWidget *parent, const QString &categoryName, const Command &command) :QDialog(parent) {
+CommandButtonEditor::CommandButtonEditor(QWidget *parent, const QString &categoryName, const Command &command)
+        : QDialog(parent) {
     _categoryName = categoryName;
     _oldCommand = command;
     _isEdit = true;
@@ -60,9 +61,7 @@ void CommandButtonEditor::onOK() {
     command.commandString = _commandStringEdit->text().toStdString();
 
     if (_isEdit) {
-        if (command.commandName != _oldCommand.commandName) {
-            settingManager->updateCommand(_categoryName.toStdString(), _oldCommand.commandName, command);
-        }
+        settingManager->updateCommand(_categoryName.toStdString(), _oldCommand.commandName, command);
     } else {
         settingManager->addCommand(_categoryName.toStdString(), command);
     }
