@@ -23,11 +23,16 @@ public:
     void logSession(const std::string &logPath);
     void disableLogSession();
 
+    bool isLoggingHexSession();
+    void logHexSession(const std::string &logPath);
+    void disableLogHexSession();
+
 signals:
     void requestDisconnect(BaseTerminal *terminal);
 
 protected:
     void onNewLine(const QString &line);
+    void onHexData(const char *data, int len);
 
 protected:
     QFont *font_ = nullptr;
@@ -35,6 +40,9 @@ protected:
     bool logging_ = false;
     std::string logPath_;
     FILE *logFp_ = nullptr;
+    bool loggingHex_ = false;
+    std::string logHexPath_;
+    FILE *logHexFp_ = nullptr;
 };
 
 

@@ -33,6 +33,7 @@ BaseTerminal::BaseTerminal(QWidget *parent) : QTermWidget(0, parent) {
     setScrollBarPosition(ScrollBarRight);
 
     QObject::connect(this, &QTermWidget::onNewLine, this, &BaseTerminal::onNewLine);
+    QObject::connect(this, &QTermWidget::receivedData, this, &BaseTerminal::onHexData);
 }
 
 BaseTerminal::~BaseTerminal() {
@@ -67,4 +68,30 @@ void BaseTerminal::onNewLine(const QString &line) {
 
 bool BaseTerminal::isLoggingSession() {
     return logging_;
+}
+
+
+void BaseTerminal::logHexSession(const std::string &logPath) {
+    logHexPath_ = logPath;
+    logHexFp_ = fopen(logPath.c_str(), "wb+");
+    loggingHex_ = true;
+}
+
+void BaseTerminal::disableLogHexSession() {
+    loggingHex_ = false;
+    if (logHexFp_) {
+        fflush(logHexFp_);
+        fclose(logHexFp_);
+        logHexFp_ = nullptr;
+    }
+}
+
+void BaseTerminal::onHexData(const char *buf, int len) {
+    if (loggingHex_) {
+        fwrite(buf, len, 1, logHexFp_);
+    }
+}
+
+bool BaseTerminal::isLoggingHexSession() {
+    return loggingHex_;
 }

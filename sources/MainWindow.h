@@ -38,6 +38,7 @@ private:
 
     void onSettingsAction();
     void onToggleSaveLogAction();
+    void onToggleSaveHexLogAction();
     void onConnectAction();
     void onDisconnectAction();
     void onExitAction();
@@ -90,6 +91,7 @@ private:
 
     QAction *_settingsAction;
     QAction *_toggleSaveLogAction;
+    QAction *_toggleSaveHexLogAction;
     QAction *_connectAction;
     QAction *_disConnectAction;
     QAction *_exitAction;

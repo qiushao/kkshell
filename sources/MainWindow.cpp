@@ -134,12 +134,19 @@ void MainWindow::initActions() {
     connect(_settingsAction, &QAction::triggered, this, &MainWindow::onSettingsAction);
 
     _toggleSaveLogAction = new QAction(*_toggleOffIcon, tr("Save Session Log"), this);
+    _toggleSaveLogAction->setEnabled(false);
     connect(_toggleSaveLogAction, &QAction::triggered, this, &MainWindow::onToggleSaveLogAction);
 
+    _toggleSaveHexLogAction = new QAction(*_toggleOffIcon, tr("Save Session Hex Log"), this);
+    _toggleSaveHexLogAction->setEnabled(false);
+    connect(_toggleSaveHexLogAction, &QAction::triggered, this, &MainWindow::onToggleSaveHexLogAction);
+
     _connectAction = new QAction(*_connectIcon, tr("Connect"), this);
+    _connectAction->setEnabled(false);
     connect(_connectAction, &QAction::triggered, this, &MainWindow::onConnectAction);
 
     _disConnectAction = new QAction(*_disconnectIcon, tr("Disconnect"), this);
+    _disConnectAction->setEnabled(false);
     connect(_disConnectAction, &QAction::triggered, this, &MainWindow::onDisconnectAction);
 
     _exitAction = new QAction(*_exitIcon, tr("Exit"), this);
@@ -187,6 +194,7 @@ void MainWindow::initMenu() {
     _mainMenuBar->addAction(_fileMenu->menuAction());
     _fileMenu->addAction(_settingsAction);
     _fileMenu->addAction(_toggleSaveLogAction);
+    _fileMenu->addAction(_toggleSaveHexLogAction);
     _fileMenu->addAction(_connectAction);
     _fileMenu->addAction(_disConnectAction);
     _fileMenu->addAction(_exitAction);
@@ -261,6 +269,24 @@ void MainWindow::onToggleSaveLogAction() {
         }
         _currentTab->logSession(logPath);
         _toggleSaveLogAction->setIcon(*_toggleOnIcon);
+    }
+}
+
+void MainWindow::onToggleSaveHexLogAction() {
+    if (_currentTab == nullptr) {
+        return;
+    }
+
+    if (_currentTab->isLoggingHexSession()) {
+        _currentTab->disableLogHexSession();
+        _toggleSaveHexLogAction->setIcon(*_toggleOffIcon);
+    } else {
+        std::string logPath = selectLogPath();
+        if (logPath.empty()) {
+            return;
+        }
+        _currentTab->logHexSession(logPath);
+        _toggleSaveHexLogAction->setIcon(*_toggleOnIcon);
     }
 }
 
@@ -406,6 +432,7 @@ void MainWindow::onTabChanged(int index) {
         _connectAction->setEnabled(false);
         _disConnectAction->setEnabled(false);
         _toggleSaveLogAction->setEnabled(false);
+        _toggleSaveHexLogAction->setEnabled(false);
         _currentTab = nullptr;
         return;
     }
@@ -419,6 +446,8 @@ void MainWindow::onTabChanged(int index) {
         _disConnectAction->setEnabled(false);
     }
 
+    _toggleSaveLogAction->setEnabled(true);
+    _toggleSaveHexLogAction->setEnabled(true);
     if (_currentTab->isLoggingSession()) {
         _toggleSaveLogAction->setIcon(*_toggleOnIcon);
     } else {
