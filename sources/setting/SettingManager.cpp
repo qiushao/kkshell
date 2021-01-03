@@ -11,6 +11,7 @@
 #include "rapidjson/prettywriter.h"
 #include "PlatformAdapter.h"
 #include "FileUtils.h"
+#include "AESUtils.h"
 
 SettingManager *SettingManager::_instance = nullptr;
 
@@ -450,7 +451,8 @@ void SettingManager::deserialize() {
                 session.port = sessionDom["port"].GetInt();
                 session.userName = sessionDom["userName"].GetString();
                 session.authType = static_cast<SSH_AUTH_TYPE>(sessionDom["authType"].GetInt());
-                session.passwd = sessionDom["passwd"].GetString();
+                std::string encryptPasswd = sessionDom["passwd"].GetString();
+                session.passwd = AESUtils::getInstance()->decrypt(encryptPasswd.c_str()).toStdString();
                 session.keyFile = sessionDom["keyFile"].GetString();
 
             } else if (SESSION_TYPE::SERIAL == session.sessionType) {
@@ -543,7 +545,8 @@ void SettingManager::serialize() {
                 writer.String(session.userName.c_str());
 
                 writer.Key("passwd");
-                writer.String(session.passwd.c_str());
+                QString encryptPasswd = AESUtils::getInstance()->encrypt(session.passwd.c_str());
+                writer.String(encryptPasswd.toStdString().c_str());
 
                 writer.Key("keyFile");
                 writer.String(session.keyFile.c_str());
