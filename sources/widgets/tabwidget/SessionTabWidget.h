@@ -10,6 +10,8 @@
 #include <QAction>
 
 class SessionTabWidget : public QTabWidget {
+Q_OBJECT
+
 public:
     explicit SessionTabWidget(QWidget *parent = nullptr);
     ~SessionTabWidget() override;
@@ -20,6 +22,8 @@ private:
     void onCloseTableAction();
     void onCloseOtherTableAction();
     void onCloseAllTableAction();
+
+    void updateTableTitle(const QString &newTitle);
 
     int _tabIndex = -1;
     QMenu *_menu = nullptr;

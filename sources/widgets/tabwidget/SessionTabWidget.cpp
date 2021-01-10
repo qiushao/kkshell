@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <QTabBar>
 #include "SessionTabWidget.h"
+#include "TableTitleEditor.h"
 
 SessionTabWidget::SessionTabWidget(QWidget *parent) : QTabWidget(parent) {
     setContextMenuPolicy(Qt::CustomContextMenu);
@@ -20,11 +21,11 @@ SessionTabWidget::SessionTabWidget(QWidget *parent) : QTabWidget(parent) {
 
     _closeOtherTableAction = new QAction(tr("Close Other Table"));
     connect(_closeOtherTableAction, &QAction::triggered, this, &SessionTabWidget::onCloseOtherTableAction);
-    _menu->addAction(_closeOtherTableAction);
+//    _menu->addAction(_closeOtherTableAction);
 
     _closeAllTableAction = new QAction(tr("Close All Table"));
     connect(_closeAllTableAction, &QAction::triggered, this, &SessionTabWidget::onCloseAllTableAction);
-    _menu->addAction(_closeAllTableAction);
+//    _menu->addAction(_closeAllTableAction);
 
     connect(this, &SessionTabWidget::customContextMenuRequested, this, &SessionTabWidget::onPopMenu);
 }
@@ -41,7 +42,9 @@ void SessionTabWidget::onPopMenu(const QPoint &point) {
 }
 
 void SessionTabWidget::onRenameTableAction() {
-
+    TableTitleEditor titleEditor(this, this->tabText(_tabIndex));
+    connect(&titleEditor, &TableTitleEditor::updateTableTitle, this, &SessionTabWidget::updateTableTitle);
+    titleEditor.exec();
 }
 
 void SessionTabWidget::onCloseTableAction() {
@@ -49,9 +52,21 @@ void SessionTabWidget::onCloseTableAction() {
 }
 
 void SessionTabWidget::onCloseOtherTableAction() {
+    while (this->count() > _tabIndex+1) {
+        this->removeTab(_tabIndex+1);
+    }
 
+    while (this->count() > 1) {
+        this->removeTab(0);
+    }
 }
 
 void SessionTabWidget::onCloseAllTableAction() {
+    while (this->count() > 0) {
+        this->removeTab(0);
+    }
+}
 
+void SessionTabWidget::updateTableTitle(const QString &newTitle) {
+    this->setTabText(_tabIndex, newTitle);
 }
