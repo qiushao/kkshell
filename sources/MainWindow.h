@@ -18,6 +18,7 @@
 #include "widgets/session/SessionListWidget.h"
 #include "widgets/terminal/BaseTerminal.h"
 #include "widgets/command/CommandToolBar.h"
+#include "widgets/tabwidget/SessionTabWidget.h"
 
 class MainWindow : public QMainWindow {
 Q_OBJECT
@@ -108,7 +109,7 @@ private:
     QAction *_toggleCommandButtonAction;
 
     //terminal list
-    QTabWidget *_tabWidget = nullptr;
+    SessionTabWidget *_tabWidget = nullptr;
     BaseTerminal *_currentTab = nullptr;
 
     //session manager

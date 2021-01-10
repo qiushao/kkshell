@@ -50,7 +50,7 @@ void MainWindow::initSessionList() {
 }
 
 void MainWindow::initTableWidget() {
-    _tabWidget = new QTabWidget(this);
+    _tabWidget = new SessionTabWidget(this);
     _tabWidget->setTabsClosable(true);
     _tabWidget->setMovable(true);
     setCentralWidget(_tabWidget);

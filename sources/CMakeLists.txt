@@ -25,6 +25,7 @@ set(SRC_FILES
         widgets/command/CommandToolBar.cpp
         widgets/command/CommandButtonEditor.cpp
         widgets/command/CommandCategoryEditor.cpp
+        widgets/tabwidget/SessionTabWidget.cpp
         widgets/SettingDialog.cpp
         )
 
