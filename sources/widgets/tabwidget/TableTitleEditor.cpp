@@ -2,6 +2,8 @@
 // Created by qiushao on 2020/11/29.
 //
 
+#include <QEvent>
+#include <QKeyEvent>
 #include "TableTitleEditor.h"
 #include "setting/SettingManager.h"
 
@@ -22,6 +24,7 @@ void TableTitleEditor::initWidgets() {
     _mainLayout->addLayout(_formLayout);
 
     _titleEdit = new QLineEdit(this);
+    _titleEdit->installEventFilter(this);
     _formLayout->addRow(tr("Tab Title："), _titleEdit);
 
     _buttonLayout = new QHBoxLayout(this);
@@ -33,6 +36,17 @@ void TableTitleEditor::initWidgets() {
 
     QObject::connect(_okButton, &QPushButton::clicked, this, &TableTitleEditor::onOK);
     QObject::connect(_cancelButton, &QPushButton::clicked, this, &TableTitleEditor::onCancel);
+}
+
+bool TableTitleEditor::eventFilter(QObject *obj, QEvent *e) {
+    if (e->type() == QEvent::KeyPress) {
+        auto *event = dynamic_cast<QKeyEvent *>(e);
+        if (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter) {
+            onOK();
+            return true;
+        }
+    }
+    return false;
 }
 
 void TableTitleEditor::onOK() {

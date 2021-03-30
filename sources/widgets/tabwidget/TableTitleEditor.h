@@ -19,6 +19,8 @@ public:
     TableTitleEditor(QWidget *parent, const QString &oldTitleName);
     ~TableTitleEditor() override;
 
+    bool eventFilter(QObject *obj, QEvent *e) override;
+
 signals:
     void updateTableTitle(const QString &newTitle);
 
