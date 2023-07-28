@@ -116,9 +116,10 @@ QString SSHTerminal::createShellFile()
     // 根据是否有证书，替换关键字
     if (_session.authType == SSH_AUTH_TYPE::PASSWD) {
         fileString.replace("<<PRIVATE_KEY>>", "");
+        //将匹配到的特殊字符[", $, \]，替换为其转义形式
         QRegExp rx("([\"$\\\\])");
         QString password = _session.passwd.c_str();
-        password.replace(rx, "\\\\\\1");
+        password.replace(rx, "\\\\1");
         fileString.replace("<<PASSWORD>>", password);
         fileString.replace("<<AUTHENTICATION>>", "no");
     } else {
