@@ -22,9 +22,7 @@ TODO：
 ## 安装依赖
 ubuntu 系列的系统：
 ```
-sudo apt install build-essential cmake qt5-default libqt5serialport5-dev
-sudo apt install libutf8proc-dev lxqt-build-tools
-sudo apt install expect zssh
+sudo apt install -y git build-essential cmake libqt5serialport5-dev libutf8proc-dev lxqt-build-tools expect zssh
 ```
 
 ## 编译运行
@@ -36,9 +34,8 @@ cd build
 cmake ..
 make -j
 sudo make install
-kkshell
 ```
-
+然后就可以从应用列表里面启动 kkshell 了
 
 ## 感谢以下开源项目
 - [QT](https://www.qt.io)
